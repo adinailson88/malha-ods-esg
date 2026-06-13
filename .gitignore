@@ -17,3 +17,6 @@ autenticacao_google.json
 chaves_api.json
 credenciais*.json
 *.secret.json
+
+# Modelos locais preenchiveis com secrets. Nao versionar depois de preenchidos.
+PREENCHER_SECRET_*.txt
