@@ -12,6 +12,7 @@ from pathlib import Path
 ARQUIVOS_CANONICOS = [
     "indicadores_ods.json",
     "pesos_ods.json",
+    "classificacao_ods_esg.json",
     "area_manutencao.json",
 ]
 
@@ -64,4 +65,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

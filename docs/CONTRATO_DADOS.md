@@ -10,6 +10,7 @@ O repositorio `adinailson88/malha-ia` permanece como hub central dos dados. Este
 |---|---|---|
 | INDICADORES_ODS | `dados/indicadores_ods.json` | Indicadores brutos por campus |
 | PESOS_ODS | `dados/pesos_ods.json` | Pesos ODS por indicador |
+| Configuracao local | `dados/classificacao_ods_esg.json` | Classificacao dos indicadores por ODS e ESG |
 | Area Manutencao | `dados/area_manutencao.json` | Contexto de area construida e area total |
 
 ## Indicadores brutos
@@ -29,3 +30,6 @@ O repositorio `adinailson88/malha-ia` permanece como hub central dos dados. Este
 
 `CHAMADOS` nao deve ser duplicado aqui como fonte primaria. Quando for necessario recalcular indicadores, usar `motor_ods.py` com acesso autenticado a planilha operacional.
 
+## Classificacao ODS/ESG
+
+`dados/classificacao_ods_esg.json` e uma configuracao metodologica local do painel. Ela nao substitui `PESOS_ODS`; ela explicita, para leitura academica e visualizacao, como cada indicador se associa a ODS 9, ODS 11, ODS 12 e aos pilares ESG Ambiental, Social e Governanca.
