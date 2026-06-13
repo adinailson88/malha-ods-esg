@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Malha ODS ESG</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+    :root {
+      --ink: #1f2937;
+      --muted: #64748b;
+      --line: #d7dee8;
+      --panel: #ffffff;
+      --bg: #f4f7fb;
+      --blue: #0f4c81;
+      --green: #2e7d32;
+      --amber: #a16207;
+      --red: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    h1 { margin: 0; font-size: 24px; color: var(--blue); }
+    header p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    header a { color: var(--blue); font-weight: 700; text-decoration: none; font-size: 13px; }
+    main { max-width: 1240px; margin: 0 auto; padding: 18px; }
+    .status {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 14px;
+      min-width: 0;
+    }
+    .span-3 { grid-column: span 3; }
+    .span-4 { grid-column: span 4; }
+    .span-5 { grid-column: span 5; }
+    .span-7 { grid-column: span 7; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      color: var(--blue);
+    }
+    .metric {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1;
+    }
+    .metric-sub { margin-top: 8px; color: var(--muted); font-size: 12px; }
+    .chart { position: relative; height: 320px; }
+    .chart-sm { position: relative; height: 240px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 7px 6px; text-align: left; vertical-align: top; }
+    th { color: var(--blue); background: #f8fafc; font-size: 11px; text-transform: uppercase; }
+    input[type="number"] { width: 74px; padding: 5px; border: 1px solid var(--line); border-radius: 4px; }
+    button {
+      border: 1px solid var(--blue);
+      background: var(--blue);
+      color: #fff;
+      border-radius: 4px;
+      padding: 7px 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button.secondary { background: #fff; color: var(--blue); }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+    .badge { display: inline-block; min-width: 54px; text-align: center; border-radius: 999px; padding: 3px 7px; color: #fff; font-weight: 700; }
+    .ok { background: var(--green); }
+    .mid { background: var(--amber); }
+    .low { background: var(--red); }
+    .muted { color: var(--muted); }
+    @media (max-width: 900px) {
+      .span-3, .span-4, .span-5, .span-7, .span-8, .span-12 { grid-column: span 12; }
+      .chart { height: 280px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Malha ODS ESG</h1>
+      <p>Indicadores multicriterio por campus para ODS 9, ODS 11 e ODS 12.</p>
+    </div>
+    <nav>
+      <a href="https://adinailson88.github.io/malha-ia/">Hub Malha IA</a>
+      &nbsp;|&nbsp;
+      <a href="https://github.com/adinailson88/malha-ods-esg">Repositorio</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="status" id="status">Carregando dados ODS/ESG...</div>
+
+    <section class="grid">
+      <div class="card span-3">
+        <h2>Campi avaliados</h2>
+        <div class="metric" id="m-campi">-</div>
+        <div class="metric-sub">linhas validas em indicadores ODS</div>
+      </div>
+      <div class="card span-3">
+        <h2>Chamados considerados</h2>
+        <div class="metric" id="m-chamados">-</div>
+        <div class="metric-sub">soma de N_chamados_total</div>
+      </div>
+      <div class="card span-3">
+        <h2>Gasto registrado</h2>
+        <div class="metric" id="m-gasto">-</div>
+        <div class="metric-sub">soma de Valor_total_gasto_R$</div>
+      </div>
+      <div class="card span-3">
+        <h2>Melhor score geral</h2>
+        <div class="metric" id="m-melhor">-</div>
+        <div class="metric-sub" id="m-melhor-campus">aguardando calculo</div>
+      </div>
+
+      <div class="card span-7">
+        <h2>Ranking geral ODS/ESG por campus</h2>
+        <div class="chart"><canvas id="chart-ranking"></canvas></div>
+      </div>
+      <div class="card span-5">
+        <h2>Comparacao ODS 9, 11 e 12</h2>
+        <div class="chart"><canvas id="chart-ods"></canvas></div>
+      </div>
+
+      <div class="card span-12">
+        <h2>Tabela de scores compostos</h2>
+        <div id="scores"></div>
+      </div>
+
+      <div class="card span-8">
+        <h2>Pesos multicriterio</h2>
+        <div class="muted">Ajustes ficam no navegador e nao alteram a planilha. Use o motor para atualizar `PESOS_ODS` na fonte.</div>
+        <div class="actions">
+          <button onclick="aplicarPesos()">Aplicar pesos</button>
+          <button class="secondary" onclick="resetarPesos()">Resetar pesos do JSON</button>
+          <button class="secondary" onclick="normalizarPesos()">Normalizar por ODS</button>
+        </div>
+        <div id="pesos"></div>
+      </div>
+      <div class="card span-4">
+        <h2>Area institucional</h2>
+        <div class="chart-sm"><canvas id="chart-area"></canvas></div>
+      </div>
+
+      <div class="card span-12">
+        <h2>Indicadores brutos por campus</h2>
+        <div id="brutos"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const arquivos = {
+      indicadores: 'dados/indicadores_ods.json',
+      pesos: 'dados/pesos_ods.json',
+      area: 'dados/area_manutencao.json'
+    };
+    const dims = [
+      ['ODS_9', 'ODS 9 - Infraestrutura'],
+      ['ODS_11', 'ODS 11 - Cidades'],
+      ['ODS_12', 'ODS 12 - Consumo']
+    ];
+    const charts = {};
+    let indicadores = [];
+    let pesosOriginais = [];
+    let pesosAtivos = [];
+    let area = [];
+
+    function brl(v) {
+      return Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+    }
+    function num(v) {
+      const n = Number(String(v ?? '').replace(',', '.'));
+      return Number.isFinite(n) ? n : null;
+    }
+    function badge(v) {
+      const cls = v >= 75 ? 'ok' : v >= 50 ? 'mid' : 'low';
+      return `<span class="badge ${cls}">${v.toFixed(1)}</span>`;
+    }
+    function tabela(headers, rows) {
+      return `<table><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    }
+    async function carregarJson(url) {
+      const resp = await fetch(url, { cache: 'no-store' });
+      if (!resp.ok) throw new Error(`${url}: HTTP ${resp.status}`);
+      return resp.json();
+    }
+    function linhasComoObjetos(tabelaJson) {
+      const cab = tabelaJson[0] || [];
+      return (tabelaJson.slice(1) || []).filter(l => l && l[0]).map(l => {
+        const obj = {};
+        cab.forEach((h, i) => obj[h] = l[i]);
+        return obj;
+      });
+    }
+    function pesoPorIndicador() {
+      const out = {};
+      pesosAtivos.forEach(p => {
+        out[p.Indicador] = {
+          sentido: String(p.Sentido || '').toLowerCase(),
+          ODS_9: num(p.ODS_9_Infraestrutura) || 0,
+          ODS_11: num(p.ODS_11_Cidades_Sustentaveis) || 0,
+          ODS_12: num(p.ODS_12_Consumo_Responsavel) || 0
+        };
+      });
+      return out;
+    }
+    function normalizarValor(valor, min, max, sentido) {
+      if (valor === null || min === null || max === null || max === min) return 0;
+      let n = (valor - min) / (max - min);
+      if (sentido === 'minimizar') n = 1 - n;
+      if (sentido === 'contextual') n = 1 - Math.abs(n - 0.5) * 2;
+      return Math.max(0, Math.min(1, n));
+    }
+    function calcularScores() {
+      const pesos = pesoPorIndicador();
+      const indicadoresNomes = Object.keys(pesos);
+      const limites = {};
+      indicadoresNomes.forEach(ind => {
+        const vals = indicadores.map(r => num(r[ind])).filter(v => v !== null);
+        limites[ind] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals) } : { min: null, max: null };
+      });
+      return indicadores.map(row => {
+        const scores = { Campus: row.Campus };
+        dims.forEach(([dim]) => {
+          let soma = 0;
+          let pesoTotal = 0;
+          indicadoresNomes.forEach(ind => {
+            const p = pesos[ind][dim] || 0;
+            const v = normalizarValor(num(row[ind]), limites[ind].min, limites[ind].max, pesos[ind].sentido);
+            soma += v * p;
+            pesoTotal += p;
+          });
+          scores[dim] = pesoTotal ? (soma / pesoTotal) * 100 : 0;
+        });
+        scores.Geral = (scores.ODS_9 + scores.ODS_11 + scores.ODS_12) / 3;
+        return scores;
+      }).sort((a, b) => b.Geral - a.Geral);
+    }
+    function renderMetricas(scores) {
+      document.getElementById('m-campi').textContent = indicadores.length.toLocaleString('pt-BR');
+      const totalChamados = indicadores.reduce((s, r) => s + (num(r.N_chamados_total) || 0), 0);
+      const totalGasto = indicadores.reduce((s, r) => s + (num(r['Valor_total_gasto_R$']) || 0), 0);
+      document.getElementById('m-chamados').textContent = totalChamados.toLocaleString('pt-BR');
+      document.getElementById('m-gasto').textContent = brl(totalGasto);
+      const melhor = scores[0];
+      document.getElementById('m-melhor').textContent = melhor ? melhor.Geral.toFixed(1) : '-';
+      document.getElementById('m-melhor-campus').textContent = melhor ? melhor.Campus : 'sem dados';
+    }
+    function renderScores(scores) {
+      document.getElementById('scores').innerHTML = tabela(
+        ['Campus', 'ODS 9', 'ODS 11', 'ODS 12', 'Geral'],
+        scores.map(s => [s.Campus, badge(s.ODS_9), badge(s.ODS_11), badge(s.ODS_12), badge(s.Geral)])
+      );
+    }
+    function renderBrutos() {
+      const headers = Object.keys(indicadores[0] || {});
+      document.getElementById('brutos').innerHTML = tabela(headers, indicadores.map(r => headers.map(h => r[h] ?? '')));
+    }
+    function renderPesos() {
+      const headers = ['Indicador', 'Sentido', 'ODS 9', 'ODS 11', 'ODS 12'];
+      const rows = pesosAtivos.map((p, i) => [
+        p.Indicador,
+        p.Sentido,
+        `<input type="number" min="0" max="1" step="0.05" value="${num(p.ODS_9_Infraestrutura) || 0}" data-i="${i}" data-k="ODS_9_Infraestrutura">`,
+        `<input type="number" min="0" max="1" step="0.05" value="${num(p.ODS_11_Cidades_Sustentaveis) || 0}" data-i="${i}" data-k="ODS_11_Cidades_Sustentaveis">`,
+        `<input type="number" min="0" max="1" step="0.05" value="${num(p.ODS_12_Consumo_Responsavel) || 0}" data-i="${i}" data-k="ODS_12_Consumo_Responsavel">`
+      ]);
+      document.getElementById('pesos').innerHTML = tabela(headers, rows);
+    }
+    function renderGraficos(scores) {
+      const labels = scores.map(s => s.Campus);
+      if (charts.ranking) charts.ranking.destroy();
+      charts.ranking = new Chart(document.getElementById('chart-ranking'), {
+        type: 'bar',
+        data: { labels, datasets: [{ label: 'Score geral', data: scores.map(s => s.Geral), backgroundColor: '#0f4c81' }] },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } } }
+      });
+      if (charts.ods) charts.ods.destroy();
+      charts.ods = new Chart(document.getElementById('chart-ods'), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            { label: 'ODS 9', data: scores.map(s => s.ODS_9), backgroundColor: '#1565c0' },
+            { label: 'ODS 11', data: scores.map(s => s.ODS_11), backgroundColor: '#2e7d32' },
+            { label: 'ODS 12', data: scores.map(s => s.ODS_12), backgroundColor: '#a16207' }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } } }
+      });
+      if (area.length) {
+        if (charts.area) charts.area.destroy();
+        charts.area = new Chart(document.getElementById('chart-area'), {
+          type: 'line',
+          data: {
+            labels: area.map(r => r.Ano),
+            datasets: [
+              { label: 'Area construida', data: area.map(r => num(r['Ãrea ConstruÃ­da mÂ²']) || num(r['Área Construída m²']) || 0), borderColor: '#0f4c81', tension: 0.2 },
+              { label: 'Area total', data: area.map(r => num(r['Ãrea total mÂ²']) || num(r['Área total m²']) || 0), borderColor: '#2e7d32', tension: 0.2 }
+            ]
+          },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+      }
+    }
+    function aplicarPesos() {
+      document.querySelectorAll('#pesos input').forEach(inp => {
+        const i = Number(inp.dataset.i);
+        const k = inp.dataset.k;
+        pesosAtivos[i][k] = Number(inp.value) || 0;
+      });
+      atualizar();
+    }
+    function resetarPesos() {
+      pesosAtivos = JSON.parse(JSON.stringify(pesosOriginais));
+      atualizar();
+    }
+    function normalizarPesos() {
+      ['ODS_9_Infraestrutura', 'ODS_11_Cidades_Sustentaveis', 'ODS_12_Consumo_Responsavel'].forEach(k => {
+        const total = pesosAtivos.reduce((s, p) => s + (num(p[k]) || 0), 0);
+        if (total > 0) pesosAtivos.forEach(p => p[k] = (num(p[k]) || 0) / total);
+      });
+      atualizar();
+    }
+    function atualizar() {
+      renderPesos();
+      renderBrutos();
+      const scores = calcularScores();
+      renderMetricas(scores);
+      renderScores(scores);
+      renderGraficos(scores);
+    }
+    async function iniciar() {
+      try {
+        const [indJson, pesosJson, areaJson] = await Promise.all([
+          carregarJson(arquivos.indicadores),
+          carregarJson(arquivos.pesos),
+          carregarJson(arquivos.area)
+        ]);
+        indicadores = linhasComoObjetos(indJson);
+        pesosOriginais = linhasComoObjetos(pesosJson);
+        pesosAtivos = JSON.parse(JSON.stringify(pesosOriginais));
+        area = linhasComoObjetos(areaJson);
+        atualizar();
+        document.getElementById('status').textContent = `Dados carregados: ${indicadores.length} campi, ${pesosAtivos.length} indicadores ponderados.`;
+      } catch (err) {
+        document.getElementById('status').textContent = `Falha ao carregar dados: ${err.message}`;
+      }
+    }
+    iniciar();
+  </script>
+</body>
+</html>
