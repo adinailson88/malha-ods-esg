@@ -1,0 +1,19 @@
+{
+  "gerado_em_utc": "2026-06-13T16:33:32.242362+00:00",
+  "hub_raw": "https://raw.githubusercontent.com/adinailson88/malha-ia/main/dados",
+  "arquivos": {
+    "indicadores_ods.json": {
+      "url": "https://raw.githubusercontent.com/adinailson88/malha-ia/main/dados/indicadores_ods.json",
+      "linhas": 6
+    },
+    "pesos_ods.json": {
+      "url": "https://raw.githubusercontent.com/adinailson88/malha-ia/main/dados/pesos_ods.json",
+      "linhas": 11
+    },
+    "area_manutencao.json": {
+      "url": "https://raw.githubusercontent.com/adinailson88/malha-ia/main/dados/area_manutencao.json",
+      "linhas": 13
+    }
+  },
+  "falhas": {}
+}
