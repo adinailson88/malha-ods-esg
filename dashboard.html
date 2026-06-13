@@ -98,6 +98,15 @@
     .mid { background: var(--amber); }
     .low { background: var(--red); }
     .muted { color: var(--muted); }
+    .guide-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .guide-list li { margin: 4px 0; }
+    .doc-link { color: var(--blue); font-weight: 700; text-decoration: none; }
     @media (max-width: 900px) {
       .span-3, .span-4, .span-5, .span-7, .span-8, .span-12 { grid-column: span 12; }
       .chart { height: 280px; }
@@ -166,6 +175,18 @@
       </div>
 
       <div class="card span-12">
+        <h2>Guia de leitura do painel</h2>
+        <ol class="guide-list">
+          <li>Use os cards superiores para conferir a escala da base: campi avaliados, chamados considerados e gasto total em reais.</li>
+          <li>Compare o ranking ODS/ESG para identificar o campus com melhor desempenho multicriterio geral.</li>
+          <li>Leia ODS 9, ODS 11 e ODS 12 separadamente para separar infraestrutura, cidades sustentaveis e consumo responsavel.</li>
+          <li>Use o ranking ESG e a composicao E/S/G para interpretar a mesma base nos pilares ambiental, social e governanca.</li>
+          <li>Consulte a tabela de classificacao para justificar metodologicamente o papel de cada indicador no artigo.</li>
+        </ol>
+        <p class="muted">Documentacao completa: <a class="doc-link" href="docs/GUIA_LEITURA_DASHBOARD.md">docs/GUIA_LEITURA_DASHBOARD.md</a></p>
+      </div>
+
+      <div class="card span-12">
         <h2>Classificacao dos indicadores por ODS e ESG</h2>
         <div class="muted">Configuracao metodologica local usada para leitura do painel e para orientar o artigo ODS/ESG.</div>
         <div id="classificacao"></div>
@@ -213,7 +234,7 @@
     let area = [];
 
     function brl(v) {
-      return Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+      return Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
     function num(v) {
       const n = Number(String(v ?? '').replace(',', '.'));
