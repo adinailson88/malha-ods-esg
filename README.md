@@ -23,10 +23,11 @@ Ficam fora deste repositorio:
 2. `dashboard.html`: painel ODS/ESG com pesos editaveis, rankings e graficos.
 3. `dados/indicadores_ods.json`: snapshot dos indicadores brutos.
 4. `dados/pesos_ods.json`: snapshot dos pesos multicriterio.
-5. `dados/area_manutencao.json`: serie de area usada como contexto institucional.
-6. `scripts/baixar_dados_hub.py`: baixa do hub os JSONs publicos usados pelo dashboard.
-7. `.github/workflows/ods_indicadores.yml`: workflow pesado para recalcular indicadores no Google Sheets.
-8. `.github/workflows/atualizar-dados-hub.yml`: workflow leve para atualizar snapshots a partir do hub.
+5. `dados/classificacao_ods_esg.json`: configuracao de classificacao dos indicadores por ODS e ESG.
+6. `dados/area_manutencao.json`: serie de area usada como contexto institucional.
+7. `scripts/baixar_dados_hub.py`: baixa do hub os JSONs publicos usados pelo dashboard.
+8. `.github/workflows/ods_indicadores.yml`: workflow pesado para recalcular indicadores no Google Sheets.
+9. `.github/workflows/atualizar-dados-hub.yml`: workflow leve para atualizar snapshots a partir do hub.
 
 ## Execucao local
 
@@ -69,4 +70,3 @@ O mesmo secret deve ser reaproveitado nos repositorios derivados que acessarem a
 ## Licenca
 
 Informação insuficiente para verificar.
-

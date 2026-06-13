@@ -151,9 +151,24 @@
         <div class="chart"><canvas id="chart-ods"></canvas></div>
       </div>
 
+      <div class="card span-7">
+        <h2>Ranking ESG por campus</h2>
+        <div class="chart"><canvas id="chart-esg"></canvas></div>
+      </div>
+      <div class="card span-5">
+        <h2>Composicao ESG do melhor campus</h2>
+        <div class="chart"><canvas id="chart-esg-melhor"></canvas></div>
+      </div>
+
       <div class="card span-12">
         <h2>Tabela de scores compostos</h2>
         <div id="scores"></div>
+      </div>
+
+      <div class="card span-12">
+        <h2>Classificacao dos indicadores por ODS e ESG</h2>
+        <div class="muted">Configuracao metodologica local usada para leitura do painel e para orientar o artigo ODS/ESG.</div>
+        <div id="classificacao"></div>
       </div>
 
       <div class="card span-8">
@@ -182,6 +197,7 @@
     const arquivos = {
       indicadores: 'dados/indicadores_ods.json',
       pesos: 'dados/pesos_ods.json',
+      classificacao: 'dados/classificacao_ods_esg.json',
       area: 'dados/area_manutencao.json'
     };
     const dims = [
@@ -193,6 +209,7 @@
     let indicadores = [];
     let pesosOriginais = [];
     let pesosAtivos = [];
+    let classificacao = [];
     let area = [];
 
     function brl(v) {
@@ -208,6 +225,13 @@
     }
     function tabela(headers, rows) {
       return `<table><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    }
+    function formatarCelula(header, valor) {
+      const h = String(header || '');
+      if (/R\$|valor|gasto/i.test(h)) return brl(num(valor) || 0);
+      const n = num(valor);
+      if (n !== null && h !== 'Ano') return n.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+      return valor ?? '';
     }
     async function carregarJson(url) {
       const resp = await fetch(url, { cache: 'no-store' });
@@ -266,6 +290,43 @@
         return scores;
       }).sort((a, b) => b.Geral - a.Geral);
     }
+    function classificacaoPorIndicador() {
+      const out = {};
+      classificacao.forEach(c => {
+        out[c.Indicador] = {
+          sentido: String(c.Sentido || '').toLowerCase(),
+          E: num(c.ESG_E_Ambiental) || 0,
+          S: num(c.ESG_S_Social) || 0,
+          G: num(c.ESG_G_Governanca) || 0
+        };
+      });
+      return out;
+    }
+    function calcularScoresESG() {
+      const cfg = classificacaoPorIndicador();
+      const indicadoresNomes = Object.keys(cfg);
+      const limites = {};
+      indicadoresNomes.forEach(ind => {
+        const vals = indicadores.map(r => num(r[ind])).filter(v => v !== null);
+        limites[ind] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals) } : { min: null, max: null };
+      });
+      return indicadores.map(row => {
+        const scores = { Campus: row.Campus };
+        [['E', 'E'], ['S', 'S'], ['G', 'G']].forEach(([dim]) => {
+          let soma = 0;
+          let pesoTotal = 0;
+          indicadoresNomes.forEach(ind => {
+            const p = cfg[ind][dim] || 0;
+            const v = normalizarValor(num(row[ind]), limites[ind].min, limites[ind].max, cfg[ind].sentido);
+            soma += v * p;
+            pesoTotal += p;
+          });
+          scores[dim] = pesoTotal ? (soma / pesoTotal) * 100 : 0;
+        });
+        scores.ESG = (scores.E + scores.S + scores.G) / 3;
+        return scores;
+      }).sort((a, b) => b.ESG - a.ESG);
+    }
     function renderMetricas(scores) {
       document.getElementById('m-campi').textContent = indicadores.length.toLocaleString('pt-BR');
       const totalChamados = indicadores.reduce((s, r) => s + (num(r.N_chamados_total) || 0), 0);
@@ -278,13 +339,28 @@
     }
     function renderScores(scores) {
       document.getElementById('scores').innerHTML = tabela(
-        ['Campus', 'ODS 9', 'ODS 11', 'ODS 12', 'Geral'],
+        ['Campus', 'ODS 9', 'ODS 11', 'ODS 12', 'Score ODS geral'],
         scores.map(s => [s.Campus, badge(s.ODS_9), badge(s.ODS_11), badge(s.ODS_12), badge(s.Geral)])
       );
     }
+    function renderClassificacao() {
+      const headers = ['Indicador', 'Classe principal', 'ODS 9', 'ODS 11', 'ODS 12', 'E', 'S', 'G', 'Justificativa'];
+      const rows = classificacao.map(c => [
+        c.Indicador,
+        c.Classe_Principal,
+        formatarCelula('peso', c.ODS_9_Infraestrutura),
+        formatarCelula('peso', c.ODS_11_Cidades_Sustentaveis),
+        formatarCelula('peso', c.ODS_12_Consumo_Responsavel),
+        formatarCelula('peso', c.ESG_E_Ambiental),
+        formatarCelula('peso', c.ESG_S_Social),
+        formatarCelula('peso', c.ESG_G_Governanca),
+        c.Justificativa
+      ]);
+      document.getElementById('classificacao').innerHTML = tabela(headers, rows);
+    }
     function renderBrutos() {
       const headers = Object.keys(indicadores[0] || {});
-      document.getElementById('brutos').innerHTML = tabela(headers, indicadores.map(r => headers.map(h => r[h] ?? '')));
+      document.getElementById('brutos').innerHTML = tabela(headers, indicadores.map(r => headers.map(h => formatarCelula(h, r[h]))));
     }
     function renderPesos() {
       const headers = ['Indicador', 'Sentido', 'ODS 9', 'ODS 11', 'ODS 12'];
@@ -297,7 +373,7 @@
       ]);
       document.getElementById('pesos').innerHTML = tabela(headers, rows);
     }
-    function renderGraficos(scores) {
+    function renderGraficos(scores, scoresESG) {
       const labels = scores.map(s => s.Campus);
       if (charts.ranking) charts.ranking.destroy();
       charts.ranking = new Chart(document.getElementById('chart-ranking'), {
@@ -332,6 +408,24 @@
           options: { responsive: true, maintainAspectRatio: false }
         });
       }
+      if (charts.esg) charts.esg.destroy();
+      charts.esg = new Chart(document.getElementById('chart-esg'), {
+        type: 'bar',
+        data: { labels: scoresESG.map(s => s.Campus), datasets: [{ label: 'Score ESG', data: scoresESG.map(s => s.ESG), backgroundColor: '#475569' }] },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } } }
+      });
+      const melhor = scoresESG[0];
+      if (melhor) {
+        if (charts.esgMelhor) charts.esgMelhor.destroy();
+        charts.esgMelhor = new Chart(document.getElementById('chart-esg-melhor'), {
+          type: 'radar',
+          data: {
+            labels: ['Ambiental', 'Social', 'Governanca'],
+            datasets: [{ label: melhor.Campus, data: [melhor.E, melhor.S, melhor.G], backgroundColor: 'rgba(15,76,129,0.18)', borderColor: '#0f4c81' }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, max: 100 } } }
+        });
+      }
     }
     function aplicarPesos() {
       document.querySelectorAll('#pesos input').forEach(inp => {
@@ -355,24 +449,28 @@
     function atualizar() {
       renderPesos();
       renderBrutos();
+      renderClassificacao();
       const scores = calcularScores();
+      const scoresESG = calcularScoresESG();
       renderMetricas(scores);
       renderScores(scores);
-      renderGraficos(scores);
+      renderGraficos(scores, scoresESG);
     }
     async function iniciar() {
       try {
-        const [indJson, pesosJson, areaJson] = await Promise.all([
+        const [indJson, pesosJson, classJson, areaJson] = await Promise.all([
           carregarJson(arquivos.indicadores),
           carregarJson(arquivos.pesos),
+          carregarJson(arquivos.classificacao),
           carregarJson(arquivos.area)
         ]);
         indicadores = linhasComoObjetos(indJson);
         pesosOriginais = linhasComoObjetos(pesosJson);
         pesosAtivos = JSON.parse(JSON.stringify(pesosOriginais));
+        classificacao = linhasComoObjetos(classJson);
         area = linhasComoObjetos(areaJson);
         atualizar();
-        document.getElementById('status').textContent = `Dados carregados: ${indicadores.length} campi, ${pesosAtivos.length} indicadores ponderados.`;
+        document.getElementById('status').textContent = `Dados carregados: ${indicadores.length} campi, ${pesosAtivos.length} indicadores ODS e ${classificacao.length} classificacoes ODS/ESG. Valores monetarios exibidos em reais (BRL).`;
       } catch (err) {
         document.getElementById('status').textContent = `Falha ao carregar dados: ${err.message}`;
       }
