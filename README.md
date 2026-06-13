@@ -28,6 +28,19 @@ Ficam fora deste repositorio:
 7. `scripts/baixar_dados_hub.py`: baixa do hub os JSONs publicos usados pelo dashboard.
 8. `.github/workflows/ods_indicadores.yml`: workflow pesado para recalcular indicadores no Google Sheets.
 9. `.github/workflows/atualizar-dados-hub.yml`: workflow leve para atualizar snapshots a partir do hub.
+10. `docs/GUIA_LEITURA_DASHBOARD.md`: documentacao de leitura do painel, tabelas, indicadores, pesos e limites de interpretacao.
+
+## Leitura do painel
+
+O dashboard exibe:
+
+1. Cards de escala da base: campi avaliados, chamados considerados, gasto registrado em reais e melhor score geral.
+2. Ranking geral ODS/ESG por campus.
+3. Comparacao separada de ODS 9, ODS 11 e ODS 12.
+4. Ranking ESG por campus e composicao E/S/G do melhor campus.
+5. Tabelas de scores compostos, classificacao metodologica ODS/ESG, pesos multicriterio e indicadores brutos.
+
+Documentacao detalhada: [`docs/GUIA_LEITURA_DASHBOARD.md`](docs/GUIA_LEITURA_DASHBOARD.md).
 
 ## Execucao local
 

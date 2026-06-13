@@ -33,3 +33,7 @@ O repositorio `adinailson88/malha-ia` permanece como hub central dos dados. Este
 ## Classificacao ODS/ESG
 
 `dados/classificacao_ods_esg.json` e uma configuracao metodologica local do painel. Ela nao substitui `PESOS_ODS`; ela explicita, para leitura academica e visualizacao, como cada indicador se associa a ODS 9, ODS 11, ODS 12 e aos pilares ESG Ambiental, Social e Governanca.
+
+## Documentacao do painel
+
+`docs/GUIA_LEITURA_DASHBOARD.md` documenta cada bloco visual do dashboard, cada tabela exibida, a regra de exibicao de valores em reais, a diferenca entre indicador bruto, peso ODS, classificacao ESG e score composto, alem dos limites de interpretacao para uso em artigo.
