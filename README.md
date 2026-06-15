@@ -26,8 +26,8 @@ Ficam fora deste repositorio:
 5. `dados/classificacao_ods_esg.json`: configuracao de classificacao dos indicadores por ODS e ESG.
 6. `dados/area_manutencao.json`: serie de area usada como contexto institucional.
 7. `scripts/baixar_dados_hub.py`: baixa do hub os JSONs publicos usados pelo dashboard.
-8. `.github/workflows/ods_indicadores.yml`: workflow pesado para recalcular indicadores no Google Sheets.
-9. `.github/workflows/atualizar-dados-hub.yml`: workflow leve para atualizar snapshots a partir do hub.
+8. `.github/workflows/ods_indicadores.yml`: workflow de compatibilidade que sincroniza indicadores publicos do hub.
+9. `.github/workflows/atualizar-dados-hub.yml`: workflow periodico para atualizar snapshots a partir do hub.
 10. `docs/GUIA_LEITURA_DASHBOARD.md`: documentacao de leitura do painel, tabelas, indicadores, pesos e limites de interpretacao.
 
 ## Leitura do painel
@@ -66,19 +66,9 @@ python scripts\baixar_dados_hub.py
 python scripts\exportar_dados_csv.py
 ```
 
-Executar recalculo completo contra Google Sheets:
+## Recalculo autenticado
 
-```powershell
-python motor_ods.py --apenas-ods
-```
-
-## Secret necessario
-
-O workflow `ods_indicadores.yml` precisa do secret:
-
-`AUTENTICACAO_GOOGLE`
-
-O mesmo secret deve ser reaproveitado nos repositorios derivados que acessarem a mesma planilha operacional.
+O recalculo completo contra Google Sheets fica centralizado no repositorio `malha-ia`, que publica os snapshots em `dados/*.json`. Este repositorio nao precisa de `AUTENTICACAO_GOOGLE` para atualizar o dashboard.
 
 ## Licenca
 

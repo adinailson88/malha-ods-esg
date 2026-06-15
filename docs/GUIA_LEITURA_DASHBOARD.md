@@ -133,7 +133,7 @@ Os scores sao comparativos dentro do snapshot carregado. Se o conjunto de campi,
 
 O painel nao deve ser lido como certificacao oficial ODS ou ESG. Ele e uma camada analitica e metodologica baseada nos dados operacionais disponiveis no ecossistema Malha IA.
 
-O recalculo completo depende de credencial Google configurada no secret `AUTENTICACAO_GOOGLE`. Sem esse secret, o repositorio consegue exibir snapshots ja versionados, mas nao consegue atualizar a planilha operacional.
+O recalculo completo depende de credencial Google no hub `malha-ia`. Este repositorio consome snapshots publicos versionados e nao precisa de `AUTENTICACAO_GOOGLE` para atualizar o dashboard.
 
 ## 14. Sequencia recomendada para o artigo
 

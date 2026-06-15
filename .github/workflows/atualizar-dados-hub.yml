@@ -3,7 +3,7 @@ name: Atualizar dados do hub
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 7 * * *'
+    - cron: '*/30 * * * *'
 
 permissions:
   contents: write
@@ -42,4 +42,3 @@ jobs:
             git commit -m "Atualiza dados ODS do hub malha-ia"
             git push
           fi
-

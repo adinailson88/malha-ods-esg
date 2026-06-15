@@ -10,11 +10,11 @@
   "hub_url": "https://github.com/adinailson88/malha-ia",
   "manifest_hub_path": "dados/manifest_hub.json",
   "modo_dados": "json_publico_hub",
-  "usa_secret": true,
-  "secret_principal": "AUTENTICACAO_GOOGLE",
+  "usa_secret": false,
+  "secret_principal": null,
   "workflow_leve": "atualizar-dados-hub.yml",
-  "workflow_pesado": "ods_indicadores.yml",
+  "workflow_pesado": null,
   "dashboard_tipo": "ods_esg_multicriterio",
   "status_operacional": "ativo",
-  "observacao": "Consome indicadores ODS/ESG do hub no modo leve e recalcula indicadores no modo pesado."
+  "observacao": "Consome indicadores ODS/ESG publicos do hub. A leitura da planilha e o recalculo pesado ficam centralizados no repositorio malha-ia."
 }

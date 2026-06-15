@@ -28,7 +28,7 @@ O repositorio `adinailson88/malha-ia` permanece como hub central dos dados. Este
 
 ## Regra de fronteira
 
-`CHAMADOS` nao deve ser duplicado aqui como fonte primaria. Quando for necessario recalcular indicadores, usar `motor_ods.py` com acesso autenticado a planilha operacional.
+`CHAMADOS` nao deve ser duplicado aqui como fonte primaria. Quando for necessario recalcular indicadores, usar o fluxo autenticado do hub `malha-ia`; este repositorio consome os snapshots publicos resultantes.
 
 ## Classificacao ODS/ESG
 
