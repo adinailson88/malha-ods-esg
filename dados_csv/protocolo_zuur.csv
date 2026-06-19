@@ -1,0 +1,9 @@
+passo,titulo,status,evidencia,mudanca_minima
+1,Outliers em indicadores brutos,verificado,dados/indicadores_ods.json,Exibir amplitude e zeros por indicador antes dos scores normalizados.
+2,Homogeneidade de variancia,precisa calcular,dados/indicadores_ods.json,Adicionar variancia/escala por indicador para evitar dominancia de indicadores monetarios ou de contagem.
+3,Normalidade,nao aplicavel como pressuposto principal,dados/indicadores_ods.json,Registrar normalidade apenas como diagnostico descritivo se a amostra de campi crescer.
+4,Zeros ou ausencia estrutural,verificado,dados/indicadores_ods.json,Separar zero operacional real de campo vazio antes da normalizacao.
+5,Colinearidade entre indicadores,precisa calcular,dados/indicadores_ods.json,Adicionar matriz de correlacao/VIF entre indicadores quando houver amostra suficiente.
+6,Relacoes entre resposta e covariaveis,adaptado,dados/pesos_ods.json,Documentar que a relacao Y-X e substituida por pesos multicriterio ODS.
+7,Interacoes,adaptado,dados/classificacao_ods_esg.json,Tratar interacao como leitura indicador x ODS x pilar ESG.
+8,Independencia espacial/temporal,precisa calcular,dados/area_manutencao.json,Adicionar verificacao de dependencia por campus/area quando houver coordenadas ou serie temporal por campus.
