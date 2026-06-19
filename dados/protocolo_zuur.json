@@ -1,0 +1,209 @@
+{
+  "gerado_em": "2026-06-18T02:50:46.781635+00:00",
+  "repositorio": "malha-ods-esg",
+  "eixo": "indicadores ODS/ESG multicriterio",
+  "referencia": "Zuur, A.F., Ieno, E.N. & Elphick, C.S. (2010). A protocol for data exploration to avoid common statistical problems. Methods in Ecology and Evolution, 1(1), 3-14. doi:10.1111/j.2041-210X.2009.00001.x",
+  "escopo": "Exploracao dos indicadores brutos e pesos publicados; sem certificacao oficial ODS/ESG.",
+  "diagnostico_do_que_falta": [
+    "Falta matriz de correlacao/VIF entre indicadores.",
+    "Falta regra explicita para zeros estruturais versus dados ausentes.",
+    "Falta diagnostico de dependencia por campus ou area institucional."
+  ],
+  "passos": [
+    {
+      "passo": 1,
+      "titulo": "Outliers em indicadores brutos",
+      "status": "verificado",
+      "evidencia": "dados/indicadores_ods.json",
+      "resultado": [
+        {
+          "indicador": "N_chamados_total",
+          "n": 5,
+          "min": 5.0,
+          "max": 4070.0,
+          "media": 2765.0,
+          "zeros": 0
+        },
+        {
+          "indicador": "N_infra_critica",
+          "n": 5,
+          "min": 2.0,
+          "max": 1187.0,
+          "media": 857.8,
+          "zeros": 0
+        },
+        {
+          "indicador": "Tempo_medio_resolucao_dias",
+          "status": "Informação insuficiente para verificar."
+        },
+        {
+          "indicador": "Taxa_resolucao_no_prazo",
+          "status": "Informação insuficiente para verificar."
+        },
+        {
+          "indicador": "N_criticos_alta",
+          "n": 5,
+          "min": 0.0,
+          "max": 0.0,
+          "media": 0.0,
+          "zeros": 5
+        },
+        {
+          "indicador": "N_em_espaco_coletivo",
+          "n": 5,
+          "min": 0.0,
+          "max": 412.0,
+          "media": 232.2,
+          "zeros": 1
+        },
+        {
+          "indicador": "Densidade_chamados_por_1000m2",
+          "n": 5,
+          "min": 0.0,
+          "max": 0.0,
+          "media": 0.0,
+          "zeros": 5
+        },
+        {
+          "indicador": "Razao_preventiva_corretiva",
+          "n": 5,
+          "min": 0.0,
+          "max": 1329.0,
+          "media": 820.8,
+          "zeros": 1
+        },
+        {
+          "indicador": "Valor_total_gasto_R$",
+          "n": 5,
+          "min": 0.0,
+          "max": 8493061.74,
+          "media": 3941545.826,
+          "zeros": 1
+        },
+        {
+          "indicador": "N_chamados_repetidos",
+          "n": 5,
+          "min": 0.0,
+          "max": 0.0,
+          "media": 0.0,
+          "zeros": 5
+        }
+      ],
+      "mudanca_minima": "Exibir amplitude e zeros por indicador antes dos scores normalizados."
+    },
+    {
+      "passo": 2,
+      "titulo": "Homogeneidade de variancia",
+      "status": "precisa calcular",
+      "evidencia": "dados/indicadores_ods.json",
+      "resultado": {
+        "status": "Informação insuficiente para verificar."
+      },
+      "mudanca_minima": "Adicionar variancia/escala por indicador para evitar dominancia de indicadores monetarios ou de contagem."
+    },
+    {
+      "passo": 3,
+      "titulo": "Normalidade",
+      "status": "nao aplicavel como pressuposto principal",
+      "evidencia": "dados/indicadores_ods.json",
+      "resultado": {
+        "n_campi": 5,
+        "observacao": "Painel multicriterio usa normalizacao min-max, nao inferencia gaussiana."
+      },
+      "mudanca_minima": "Registrar normalidade apenas como diagnostico descritivo se a amostra de campi crescer."
+    },
+    {
+      "passo": 4,
+      "titulo": "Zeros ou ausencia estrutural",
+      "status": "verificado",
+      "evidencia": "dados/indicadores_ods.json",
+      "resultado": {
+        "indicadores": [
+          {
+            "indicador": "N_chamados_total",
+            "zeros": 0
+          },
+          {
+            "indicador": "N_infra_critica",
+            "zeros": 0
+          },
+          {
+            "indicador": "Tempo_medio_resolucao_dias",
+            "zeros": null
+          },
+          {
+            "indicador": "Taxa_resolucao_no_prazo",
+            "zeros": null
+          },
+          {
+            "indicador": "N_criticos_alta",
+            "zeros": 5
+          },
+          {
+            "indicador": "N_em_espaco_coletivo",
+            "zeros": 1
+          },
+          {
+            "indicador": "Densidade_chamados_por_1000m2",
+            "zeros": 5
+          },
+          {
+            "indicador": "Razao_preventiva_corretiva",
+            "zeros": 1
+          },
+          {
+            "indicador": "Valor_total_gasto_R$",
+            "zeros": 1
+          },
+          {
+            "indicador": "N_chamados_repetidos",
+            "zeros": 5
+          }
+        ]
+      },
+      "mudanca_minima": "Separar zero operacional real de campo vazio antes da normalizacao."
+    },
+    {
+      "passo": 5,
+      "titulo": "Colinearidade entre indicadores",
+      "status": "precisa calcular",
+      "evidencia": "dados/indicadores_ods.json",
+      "resultado": {
+        "status": "Informação insuficiente para verificar."
+      },
+      "mudanca_minima": "Adicionar matriz de correlacao/VIF entre indicadores quando houver amostra suficiente."
+    },
+    {
+      "passo": 6,
+      "titulo": "Relacoes entre resposta e covariaveis",
+      "status": "adaptado",
+      "evidencia": "dados/pesos_ods.json",
+      "resultado": {
+        "n_indicadores": 10,
+        "n_pesos": 10
+      },
+      "mudanca_minima": "Documentar que a relacao Y-X e substituida por pesos multicriterio ODS."
+    },
+    {
+      "passo": 7,
+      "titulo": "Interacoes",
+      "status": "adaptado",
+      "evidencia": "dados/classificacao_ods_esg.json",
+      "resultado": {
+        "n_classificacoes": 10
+      },
+      "mudanca_minima": "Tratar interacao como leitura indicador x ODS x pilar ESG."
+    },
+    {
+      "passo": 8,
+      "titulo": "Independencia espacial/temporal",
+      "status": "precisa calcular",
+      "evidencia": "dados/area_manutencao.json",
+      "resultado": {
+        "linhas_area": 12
+      },
+      "mudanca_minima": "Adicionar verificacao de dependencia por campus/area quando houver coordenadas ou serie temporal por campus."
+    }
+  ],
+  "metodo_artigo": "No eixo ODS/ESG, o protocolo de Zuur et al. (2010) foi adaptado a indicadores multicriterio por campus. Antes da composicao dos scores, os indicadores brutos devem ser inspecionados quanto a outliers, zeros estruturais, escalas discrepantes, colinearidade e dependencia por unidade institucional. Os passos de relacao Y-X e interacao sao reinterpretados como pesos indicador-ODS e leitura indicador-ODS-ESG."
+}
