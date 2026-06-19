@@ -12,6 +12,8 @@ O repositorio `adinailson88/malha-ia` permanece como hub central dos dados. Este
 | PESOS_ODS | `dados/pesos_ods.json` | Pesos ODS por indicador |
 | Configuracao local | `dados/classificacao_ods_esg.json` | Classificacao dos indicadores por ODS e ESG |
 | Area Manutencao | `dados/area_manutencao.json` | Contexto de area construida e area total |
+| Artefato local | `dados/protocolo_zuur.json` | Diagnostico transversal de exploracao de dados segundo Zuur et al. (2010) |
+| Artefato local | `dados/analise_gam.json` | Avaliacao de adequacao GAM; no snapshot atual, registra insuficiencia para ajuste inferencial |
 
 ## Indicadores brutos
 

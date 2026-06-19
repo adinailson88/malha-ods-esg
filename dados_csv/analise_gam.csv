@@ -1,0 +1,4 @@
+campo,valor
+status_geral,nao_recomendado_para_ajuste_inferencial
+familia_recomendada,Nao ajustar GAM inferencial com o snapshot atual; usar como extensao futura se houver serie painel campus-mes.
+unidades_observacionais,5
