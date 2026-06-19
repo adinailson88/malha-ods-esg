@@ -211,6 +211,16 @@
         <h2>Indicadores brutos por campus</h2>
         <div id="brutos"></div>
       </div>
+
+      <div class="card span-12">
+        <h2>Protocolo de exploracao de dados</h2>
+        <div id="protocolo-zuur"></div>
+      </div>
+
+      <div class="card span-12">
+        <h2>Camada GAM explicavel</h2>
+        <div id="analise-gam"></div>
+      </div>
     </section>
   </main>
 
@@ -219,7 +229,9 @@
       indicadores: 'dados/indicadores_ods.json',
       pesos: 'dados/pesos_ods.json',
       classificacao: 'dados/classificacao_ods_esg.json',
-      area: 'dados/area_manutencao.json'
+      area: 'dados/area_manutencao.json',
+      protocoloZuur: 'dados/protocolo_zuur.json',
+      analiseGam: 'dados/analise_gam.json'
     };
     const dims = [
       ['ODS_9', 'ODS 9 - Infraestrutura'],
@@ -246,6 +258,38 @@
     }
     function tabela(headers, rows) {
       return `<table><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    }
+    function renderProtocoloZuur(protocolo) {
+      const el = document.getElementById('protocolo-zuur');
+      if (!protocolo || !Array.isArray(protocolo.passos)) {
+        el.innerHTML = '<div class="muted">dados/protocolo_zuur.json indisponivel.</div>';
+        return;
+      }
+      const rows = protocolo.passos.map(p => [
+        p.passo,
+        p.titulo,
+        `<span class="badge ${p.status === 'verificado' || p.status === 'adaptado' ? 'ok' : p.status === 'nao aplicavel como pressuposto principal' ? 'mid' : 'low'}">${p.status}</span>`,
+        p.evidencia,
+        p.mudanca_minima
+      ]);
+      el.innerHTML = `<p class="muted">${protocolo.metodo_artigo || ''}</p>` +
+        tabela(['Passo', 'Diagnostico', 'Status', 'Evidencia', 'Mudanca minima'], rows);
+    }
+    function renderAnaliseGam(gam) {
+      const el = document.getElementById('analise-gam');
+      if (!gam || !Array.isArray(gam.efeitos_aditivos)) {
+        el.innerHTML = '<div class="muted">dados/analise_gam.json indisponivel.</div>';
+        return;
+      }
+      const suporte = gam.suporte_amostral || {};
+      const rows = gam.efeitos_aditivos.map(e => [
+        e.termo,
+        `<span class="badge ${String(e.status || '').includes('descritivo') ? 'mid' : 'low'}">${e.status}</span>`,
+        e.evidencia
+      ]);
+      el.innerHTML = `<div class="muted"><strong>Status:</strong> ${gam.status_geral}. <strong>Leitura:</strong> ${gam.familia_recomendada}</div>` +
+        `<div class="muted">Suporte: ${suporte.unidades_observacionais || 0} unidades observacionais; minimo operacional ${suporte.minimo_operacional || 'n/a'}.</div>` +
+        tabela(['Termo GAM', 'Status', 'Evidencia'], rows);
     }
     function formatarCelula(header, valor) {
       const h = String(header || '');
@@ -479,11 +523,13 @@
     }
     async function iniciar() {
       try {
-        const [indJson, pesosJson, classJson, areaJson] = await Promise.all([
+        const [indJson, pesosJson, classJson, areaJson, protocoloJson, gamJson] = await Promise.all([
           carregarJson(arquivos.indicadores),
           carregarJson(arquivos.pesos),
           carregarJson(arquivos.classificacao),
-          carregarJson(arquivos.area)
+          carregarJson(arquivos.area),
+          carregarJson(arquivos.protocoloZuur),
+          carregarJson(arquivos.analiseGam)
         ]);
         indicadores = linhasComoObjetos(indJson);
         pesosOriginais = linhasComoObjetos(pesosJson);
@@ -491,6 +537,8 @@
         classificacao = linhasComoObjetos(classJson);
         area = linhasComoObjetos(areaJson);
         atualizar();
+        renderProtocoloZuur(protocoloJson);
+        renderAnaliseGam(gamJson);
         document.getElementById('status').textContent = `Dados carregados: ${indicadores.length} campi, ${pesosAtivos.length} indicadores ODS e ${classificacao.length} classificacoes ODS/ESG. Valores monetarios exibidos em reais (BRL).`;
       } catch (err) {
         document.getElementById('status').textContent = `Falha ao carregar dados: ${err.message}`;
