@@ -162,7 +162,35 @@ Esta tabela explica a configuracao metodologica usada no painel. Ela deve ser us
 
 Esta configuracao nao altera a planilha operacional. Ela e um contrato metodologico local para leitura, painel e artigo.
 
-## 12. Pesos multicriterio
+## 12. Evolucao anual ODS/ESG
+
+O bloco `Evolucao anual ODS/ESG` registra a necessidade metodologica de acompanhar o ranking por ano e por campus.
+
+No estado atual, `dados/indicadores_ods.json` e um snapshot por campus e nao possui coluna `Ano`. Portanto, o dashboard ainda nao calcula historico ODS/ESG anual. A camada patrimonial ja possui serie anual por campus, mas ela ainda nao substitui uma serie historica dos indicadores ODS/ESG.
+
+Para ativar esse painel historico, a proxima versao de dados deve materializar um arquivo com pelo menos:
+
+| Campo | Uso |
+|---|---|
+| `Ano` | separar o calculo por ciclo anual |
+| `Campus` | identificar a unidade/local |
+| indicadores brutos ODS/ESG | recalcular os scores por ano |
+| pesos aplicados | preservar rastreabilidade da matriz em cada ano |
+| `Score_ODS9`, `Score_ODS11`, `Score_ODS12` | mostrar evolucao por indice |
+| `Score_Geral_ODS` | montar ranking anual |
+| `Score_ESG` | comparar evolucao dos pilares ESG |
+| `Ranking_Ano` | registrar posicao relativa no ano |
+
+Arquivos sugeridos:
+
+```text
+dados/indicadores_ods_historico.json
+dados_csv/indicadores_ods_historico.csv
+```
+
+Essa evolucao deve permitir responder, por campus e por ano: o que melhorou, o que piorou, qual indice explica a mudanca e se a alteracao decorre de dado operacional, patrimonio/area, custo, criticidade, recorrencia ou mudanca de peso.
+
+## 13. Pesos multicriterio
 
 A tabela `Pesos multicriterio` permite testar cenarios diretamente no navegador. Os botoes executam apenas calculos locais:
 
@@ -174,13 +202,13 @@ A tabela `Pesos multicriterio` permite testar cenarios diretamente no navegador.
 
 Essas alteracoes nao escrevem no Google Sheets, nao geram commit e nao modificam os arquivos JSON. Para alterar a fonte, e necessario atualizar `PESOS_ODS` pelo fluxo autenticado do motor.
 
-## 13. Area institucional
+## 14. Area institucional
 
 O grafico `Area institucional` mostra a evolucao de area construida e area total. Ele nao entra diretamente no score geral, mas contextualiza a escala fisica da manutencao.
 
 Se o dado de area estiver ausente, zerado ou com cabecalhos divergentes, o grafico pode perder utilidade. Nesse caso, a correcao deve ser feita no hub ou no snapshot de origem.
 
-## 14. Indicadores brutos por campus
+## 15. Indicadores brutos por campus
 
 Esta tabela mostra os dados antes da normalizacao. Ela e a principal area de auditoria do dashboard.
 
@@ -199,7 +227,7 @@ Esta tabela mostra os dados antes da normalizacao. Ela e a principal area de aud
 
 O campo `Valor_total_gasto_R$` deve aparecer como moeda brasileira na tabela, por exemplo `R$ 8.493.061,74`.
 
-## 15. Qualidade dos indicadores
+## 16. Qualidade dos indicadores
 
 O bloco `Qualidade dos indicadores` separa indicadores ativos dos indicadores que ainda nao devem entrar no score composto.
 
@@ -212,7 +240,7 @@ O bloco `Qualidade dos indicadores` separa indicadores ativos dos indicadores qu
 
 Essa camada e essencial porque o snapshot atual ainda possui campos vazios ou zerados por falta de fonte, como tempo de resolucao, taxa no prazo, densidade por area, criticidade alta e chamados repetidos.
 
-## 16. Limites de interpretacao
+## 17. Limites de interpretacao
 
 Os scores sao comparativos dentro do snapshot carregado. Se o conjunto de campi, o periodo ou os dados de origem mudarem, os limites de normalizacao tambem mudam.
 
@@ -220,6 +248,6 @@ O painel nao deve ser lido como certificacao oficial ODS ou ESG. Ele e uma camad
 
 O recalculo completo depende de credencial Google no hub `malha-ia`. Este repositorio consome snapshots publicos versionados e nao precisa de `AUTENTICACAO_GOOGLE` para atualizar o dashboard.
 
-## 17. Sequencia recomendada para o artigo
+## 18. Sequencia recomendada para o artigo
 
 Primeiro, descreva a origem dos dados e a fronteira do corpus. Depois, apresente os indicadores brutos. Em seguida, explique os pesos ODS e a classificacao ESG. Por fim, use os rankings e composicoes como resultados interpretativos, sempre deixando claro que eles derivam de normalizacao multicriterio aplicada ao snapshot analisado.

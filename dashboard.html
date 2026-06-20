@@ -250,6 +250,11 @@
       </div>
 
       <div class="card span-12">
+        <h2>Evolucao anual ODS/ESG</h2>
+        <div id="evolucao-anual"></div>
+      </div>
+
+      <div class="card span-12">
         <h2>Guia de leitura do painel</h2>
         <ol class="guide-list">
           <li>Use os cards superiores para conferir a escala da base: campi avaliados, chamados considerados e gasto total em reais.</li>
@@ -681,6 +686,31 @@
         '<h3>Detalhe TOPSIS por campus</h3>' +
         tabela(['Rank', 'Campus', 'D+', 'D-', 'C_i'], topsisRows);
     }
+    function renderEvolucaoAnual() {
+      const el = document.getElementById('evolucao-anual');
+      const headersIndicadores = Object.keys(indicadores[0] || {});
+      const temAnoIndicadores = headersIndicadores.includes('Ano') || headersIndicadores.includes('ano');
+      const anosPatrimonio = [...new Set(patrimonioCampusAno.map(r => r.Ano).filter(Boolean))].sort();
+      if (!temAnoIndicadores) {
+        const patrimonioInfo = anosPatrimonio.length
+          ? `A camada patrimonial ja possui serie anual de ${anosPatrimonio[0]} a ${anosPatrimonio[anosPatrimonio.length - 1]}.`
+          : 'A camada patrimonial anual ainda nao esta disponivel.';
+        el.innerHTML =
+          '<div class="notice">Ranking ODS/ESG por ano pendente: dados/indicadores_ods.json ainda e um snapshot por campus, sem coluna Ano.</div>' +
+          `<p class="muted">${patrimonioInfo} Para calcular evolucao ODS/ESG por local e por ano, sera necessario gerar uma tabela historica com pelo menos: Ano, Campus, indicadores brutos, pesos aplicados, score ODS 9, score ODS 11, score ODS 12, score geral, score ESG e ranking anual.</p>` +
+          tabela(
+            ['Item', 'Status atual', 'Uso futuro'],
+            [
+              ['Ranking ODS/ESG anual', 'pendente', 'mostrar posicao de cada campus por ano'],
+              ['Historico por indice', 'pendente', 'comparar melhora ou piora em ODS 9, ODS 11, ODS 12 e ESG'],
+              ['Patrimonio anual', anosPatrimonio.length ? 'disponivel' : 'pendente', 'normalizar chamados, custos e exposicao patrimonial por ano'],
+              ['Arquivo sugerido', 'a criar', 'dados/indicadores_ods_historico.json e dados_csv/indicadores_ods_historico.csv']
+            ]
+          );
+        return;
+      }
+      el.innerHTML = '<div class="muted">Serie anual ODS/ESG detectada. A renderizacao historica deve calcular rankings por Ano e Campus usando a mesma memoria de calculo dos scores.</div>';
+    }
     function renderClassificacao() {
       const headers = ['Indicador', 'Classe principal', 'ODS 9', 'ODS 11', 'ODS 12', 'E', 'S', 'G', 'Justificativa'];
       const rows = classificacao.map(c => [
@@ -833,6 +863,7 @@
       renderScores(scores);
       renderTOPSIS(topsis);
       renderMemoriaCalculo(scores, topsis);
+      renderEvolucaoAnual();
       renderGraficos(scores, scoresESG);
     }
     function renderMapaPatrimonio() {
