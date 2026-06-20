@@ -133,10 +133,18 @@ Unidades de análise (alternativas) no snapshot atual: `Campus Jorge Amado`,
   normalização min–max deste indicador (sentido `maximizar`). **Os snapshots gerados
   antes da correção ainda contêm os valores antigos — reexecutar o motor para
   regenerar.** O nome histórico da coluna foi preservado.
+- **Observação pós-correção (snapshot 2026-06-20):** após a regeneração, os valores ficaram
+  `1, 0, 1, 1, 1` — quase constantes. Isso ocorre porque `n_corr == 0` para quase todos os
+  campi (a heurística "preventiv"/"corretiv" em `COL_CAT_IA` está pouco preenchida), de modo
+  que a proporção colapsa em 1,0; o único `0` é o campus quase-vazio (Maria Felipa). O bug
+  anterior produzia uma **falsa variação** (998/1214/1366); corrigido, revela-se que o
+  indicador tem **variância quase nula** e, pela regra de Zuur, deve ser tratado como
+  **quase-lacuna** até a heurística ser melhorada. **Reclassificação prática: de "ativo"
+  para discriminação efetiva próxima de nula.**
 - **Melhoria da fonte pendente:** revisar a heurística que detecta "preventiv"/"corretiv"
   em `COL_CAT_IA`, pois muitos chamados podem não estar marcados, levando `n_corr` a zero
-  artificialmente. **A mesma correção precisa ser replicada no motor do hub `malha-ia`**,
-  que é a fonte autenticada dos snapshots.
+  artificialmente — esta é agora a melhoria de maior prioridade para este indicador. A
+  correção do cálculo já foi replicada no motor do hub `malha-ia` (fonte autenticada).
 
 ### 3.9 Valor_total_gasto_R$
 - **Definição:** valor total registrado, em reais, gasto com chamados por campus.
