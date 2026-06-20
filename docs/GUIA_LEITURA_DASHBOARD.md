@@ -85,7 +85,70 @@ Esta tabela apresenta, por campus:
 
 Os selos coloridos indicam faixas de leitura: verde para scores maiores ou iguais a 75, amarelo para 50 a 74,9 e vermelho para abaixo de 50.
 
-## 10. Classificacao dos indicadores por ODS e ESG
+## 10. Memoria de calculo dos rankings
+
+O bloco `Memoria de calculo dos rankings` documenta as equacoes usadas no dashboard e deve ser usado como base para a secao metodologica do artigo.
+
+A matriz de decisao usa campi como alternativas e indicadores ODS/ESG como criterios. Para cada campus `i` e indicador `j`, o valor bruto `x_ij` e convertido para um valor normalizado `r_ij` em escala 0-1.
+
+Indicadores a maximizar:
+
+```text
+r_ij = (x_ij - min_j) / (max_j - min_j)
+```
+
+Indicadores a minimizar:
+
+```text
+r_ij = 1 - (x_ij - min_j) / (max_j - min_j)
+```
+
+Indicadores contextuais:
+
+```text
+n_ij = (x_ij - min_j) / (max_j - min_j)
+r_ij = 1 - |n_ij - 0,5| x 2
+```
+
+O score de cada dimensao ODS `d` e uma media ponderada normalizada:
+
+```text
+S_i,d = 100 x soma_j(r_ij x w_j,d) / soma_j(w_j,d)
+```
+
+O score geral ODS/ESG exibido no ranking principal e:
+
+```text
+Score_geral_i = (S_i,ODS9 + S_i,ODS11 + S_i,ODS12) / 3
+```
+
+No painel TOPSIS, os pesos dos criterios sao agregados a partir das tres colunas ODS:
+
+```text
+w_j,T = (w_j,ODS9 + w_j,ODS11 + w_j,ODS12) / soma_j(w_j,ODS9 + w_j,ODS11 + w_j,ODS12)
+```
+
+A matriz ponderada TOPSIS usa normalizacao vetorial:
+
+```text
+v_ij = (x_ij / sqrt(soma_i x_ij^2)) x w_j,T
+```
+
+Depois sao calculadas as distancias de cada campus ate a solucao ideal positiva e negativa:
+
+```text
+D_i+ = distancia ate a solucao ideal positiva
+D_i- = distancia ate a solucao ideal negativa
+C_i = D_i- / (D_i+ + D_i-) x 100
+```
+
+Quanto maior `C_i`, maior a proximidade relativa do campus em relacao a alternativa ideal no conjunto de criterios ativos.
+
+Base metodologica: Hwang e Yoon (1981) para TOPSIS/MADM; Saaty (2008) para AHP; Zuur, Ieno e Elphick (2009) para auditoria exploratoria antes da composicao de scores; Klumbyte et al. (2021) e Theilig et al. (2024) para MCDM em facilities, ambiente construido e sustentabilidade.
+
+Importante: os pesos atuais sao operacionais e editaveis. Eles sao compativeis com leitura AHP, mas ainda nao representam AHP formal, porque nao houve matriz pareada de especialistas nem calculo de razao de consistencia.
+
+## 11. Classificacao dos indicadores por ODS e ESG
 
 Esta tabela explica a configuracao metodologica usada no painel. Ela deve ser usada como apoio de escrita do artigo, porque explicita como cada indicador e interpretado.
 
@@ -99,7 +162,7 @@ Esta tabela explica a configuracao metodologica usada no painel. Ela deve ser us
 
 Esta configuracao nao altera a planilha operacional. Ela e um contrato metodologico local para leitura, painel e artigo.
 
-## 11. Pesos multicriterio
+## 12. Pesos multicriterio
 
 A tabela `Pesos multicriterio` permite testar cenarios diretamente no navegador. Os botoes executam apenas calculos locais:
 
@@ -111,13 +174,13 @@ A tabela `Pesos multicriterio` permite testar cenarios diretamente no navegador.
 
 Essas alteracoes nao escrevem no Google Sheets, nao geram commit e nao modificam os arquivos JSON. Para alterar a fonte, e necessario atualizar `PESOS_ODS` pelo fluxo autenticado do motor.
 
-## 12. Area institucional
+## 13. Area institucional
 
 O grafico `Area institucional` mostra a evolucao de area construida e area total. Ele nao entra diretamente no score geral, mas contextualiza a escala fisica da manutencao.
 
 Se o dado de area estiver ausente, zerado ou com cabecalhos divergentes, o grafico pode perder utilidade. Nesse caso, a correcao deve ser feita no hub ou no snapshot de origem.
 
-## 13. Indicadores brutos por campus
+## 14. Indicadores brutos por campus
 
 Esta tabela mostra os dados antes da normalizacao. Ela e a principal area de auditoria do dashboard.
 
@@ -136,7 +199,7 @@ Esta tabela mostra os dados antes da normalizacao. Ela e a principal area de aud
 
 O campo `Valor_total_gasto_R$` deve aparecer como moeda brasileira na tabela, por exemplo `R$ 8.493.061,74`.
 
-## 14. Qualidade dos indicadores
+## 15. Qualidade dos indicadores
 
 O bloco `Qualidade dos indicadores` separa indicadores ativos dos indicadores que ainda nao devem entrar no score composto.
 
@@ -149,7 +212,7 @@ O bloco `Qualidade dos indicadores` separa indicadores ativos dos indicadores qu
 
 Essa camada e essencial porque o snapshot atual ainda possui campos vazios ou zerados por falta de fonte, como tempo de resolucao, taxa no prazo, densidade por area, criticidade alta e chamados repetidos.
 
-## 15. Limites de interpretacao
+## 16. Limites de interpretacao
 
 Os scores sao comparativos dentro do snapshot carregado. Se o conjunto de campi, o periodo ou os dados de origem mudarem, os limites de normalizacao tambem mudam.
 
@@ -157,6 +220,6 @@ O painel nao deve ser lido como certificacao oficial ODS ou ESG. Ele e uma camad
 
 O recalculo completo depende de credencial Google no hub `malha-ia`. Este repositorio consome snapshots publicos versionados e nao precisa de `AUTENTICACAO_GOOGLE` para atualizar o dashboard.
 
-## 16. Sequencia recomendada para o artigo
+## 17. Sequencia recomendada para o artigo
 
 Primeiro, descreva a origem dos dados e a fronteira do corpus. Depois, apresente os indicadores brutos. Em seguida, explique os pesos ODS e a classificacao ESG. Por fim, use os rankings e composicoes como resultados interpretativos, sempre deixando claro que eles derivam de normalizacao multicriterio aplicada ao snapshot analisado.
