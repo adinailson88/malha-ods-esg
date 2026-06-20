@@ -440,16 +440,16 @@ def garantir_aba_pesos_ods():
                  'ODS_12_Consumo_Responsavel']
     linhas_padrao = [
         cabecalho,
-        ['N_chamados_total',              'minimizar',  0.10, 0.10, 0.05],
-        ['N_infra_critica',               'minimizar',  0.30, 0.10, 0.00],
-        ['Tempo_medio_resolucao_dias',    'minimizar',  0.20, 0.05, 0.10],
-        ['Taxa_resolucao_no_prazo',       'maximizar',  0.20, 0.10, 0.10],
-        ['N_criticos_alta',               'minimizar',  0.10, 0.30, 0.05],
-        ['N_em_espaco_coletivo',          'contextual', 0.05, 0.25, 0.05],
-        ['Densidade_chamados_por_1000m2', 'minimizar',  0.00, 0.05, 0.05],
-        ['Razao_preventiva_corretiva',    'maximizar',  0.05, 0.05, 0.30],
+        ['N_chamados_total',              'minimizar',  0.05, 0.05, 0.05],
+        ['N_infra_critica',               'minimizar',  0.35, 0.05, 0.00],
+        ['Tempo_medio_resolucao_dias',    'minimizar',  0.20, 0.10, 0.05],
+        ['Taxa_resolucao_no_prazo',       'maximizar',  0.20, 0.10, 0.05],
+        ['N_criticos_alta',               'minimizar',  0.05, 0.25, 0.05],
+        ['N_em_espaco_coletivo',          'contextual', 0.05, 0.30, 0.00],
+        ['Densidade_chamados_por_1000m2', 'minimizar',  0.05, 0.10, 0.10],
+        ['Razao_preventiva_corretiva',    'maximizar',  0.05, 0.05, 0.35],
         ['Valor_total_gasto_R$',          'minimizar',  0.00, 0.00, 0.20],
-        ['N_chamados_repetidos',          'minimizar',  0.00, 0.00, 0.10]
+        ['N_chamados_repetidos',          'minimizar',  0.00, 0.00, 0.15]
     ]
     try:
         aba = obter_aba('PESOS_ODS', linhas=50, colunas=5, cabecalho=cabecalho)

@@ -78,6 +78,15 @@
     .metric-sub { margin-top: 8px; color: var(--muted); font-size: 12px; }
     .chart { position: relative; height: 320px; }
     .chart-sm { position: relative; height: 240px; }
+    .mapa-patrimonio {
+      width: 100%;
+      min-height: 420px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+    }
+    .map-point { fill: var(--blue); stroke: #fff; stroke-width: 2; }
+    .map-label { fill: var(--ink); font-size: 11px; font-weight: 700; }
+    .map-city { fill: var(--muted); font-size: 10px; }
     table { width: 100%; border-collapse: collapse; font-size: 12px; }
     th, td { border-bottom: 1px solid var(--line); padding: 7px 6px; text-align: left; vertical-align: top; }
     th { color: var(--blue); background: #f8fafc; font-size: 11px; text-transform: uppercase; }
@@ -98,6 +107,16 @@
     .mid { background: var(--amber); }
     .low { background: var(--red); }
     .muted { color: var(--muted); }
+    .notice {
+      border-left: 4px solid var(--amber);
+      background: #fff7ed;
+      padding: 9px 11px;
+      margin: 8px 0 10px;
+      color: #7c2d12;
+      font-size: 13px;
+    }
+    .quality-row-active { color: var(--green); font-weight: 700; }
+    .quality-row-muted { color: var(--muted); }
     .guide-list {
       margin: 0;
       padding-left: 18px;
@@ -151,6 +170,27 @@
         <div class="metric-sub" id="m-melhor-campus">aguardando calculo</div>
       </div>
 
+      <div class="card span-3">
+        <h2>Indicadores ativos</h2>
+        <div class="metric" id="m-ativos">-</div>
+        <div class="metric-sub">entram no score composto</div>
+      </div>
+      <div class="card span-3">
+        <h2>Lacunas detectadas</h2>
+        <div class="metric" id="m-lacunas">-</div>
+        <div class="metric-sub">sem dados ou sem variacao</div>
+      </div>
+      <div class="card span-3">
+        <h2>Metodo</h2>
+        <div class="metric">MCDM</div>
+        <div class="metric-sub">soma ponderada com auditoria</div>
+      </div>
+      <div class="card span-3">
+        <h2>Leitura ESG</h2>
+        <div class="metric">E/S/G</div>
+        <div class="metric-sub">camada interpretativa, nao certificacao</div>
+      </div>
+
       <div class="card span-7">
         <h2>Ranking geral ODS/ESG por campus</h2>
         <div class="chart"><canvas id="chart-ranking"></canvas></div>
@@ -158,6 +198,16 @@
       <div class="card span-5">
         <h2>Comparacao ODS 9, 11 e 12</h2>
         <div class="chart"><canvas id="chart-ods"></canvas></div>
+      </div>
+
+      <div class="card span-7">
+        <h2>Painel de decisao TOPSIS/AHP</h2>
+        <div class="notice">TOPSIS ranqueia os campi como alternativas. Os pesos atuais funcionam como pesos AHP operacionais, ainda sem matriz pareada formal de especialistas.</div>
+        <div class="chart"><canvas id="chart-topsis"></canvas></div>
+      </div>
+      <div class="card span-5">
+        <h2>Ranking TOPSIS</h2>
+        <div id="topsis-ranking"></div>
       </div>
 
       <div class="card span-7">
@@ -171,7 +221,13 @@
 
       <div class="card span-12">
         <h2>Tabela de scores compostos</h2>
+        <div class="notice">Indicadores sem dados numericos suficientes ou sem variacao entre campi sao exibidos na auditoria, mas nao entram no calculo do score. Isso evita ranking artificial quando a planilha ainda nao esta completa.</div>
         <div id="scores"></div>
+      </div>
+
+      <div class="card span-12">
+        <h2>Qualidade dos indicadores</h2>
+        <div id="qualidade-indicadores"></div>
       </div>
 
       <div class="card span-12">
@@ -207,6 +263,20 @@
         <div class="chart-sm"><canvas id="chart-area"></canvas></div>
       </div>
 
+      <div class="card span-7">
+        <h2>Patrimonio por campus e ano</h2>
+        <div class="chart"><canvas id="chart-patrimonio"></canvas></div>
+      </div>
+      <div class="card span-5">
+        <h2>Mapa patrimonial</h2>
+        <div id="mapa-patrimonio"></div>
+      </div>
+
+      <div class="card span-12">
+        <h2>Base patrimonial por campus/ano</h2>
+        <div id="patrimonio-tabela"></div>
+      </div>
+
       <div class="card span-12">
         <h2>Indicadores brutos por campus</h2>
         <div id="brutos"></div>
@@ -229,7 +299,10 @@
       indicadores: 'dados/indicadores_ods.json',
       pesos: 'dados/pesos_ods.json',
       classificacao: 'dados/classificacao_ods_esg.json',
+      metadados: 'dados/metadados_indicadores.json',
       area: 'dados/area_manutencao.json',
+      patrimonioCampusAno: 'dados/patrimonio_imobiliario_campus_ano.json',
+      patrimonioMapa: 'dados/patrimonio_imobiliario_mapa.json',
       protocoloZuur: 'dados/protocolo_zuur.json',
       analiseGam: 'dados/analise_gam.json'
     };
@@ -243,7 +316,10 @@
     let pesosOriginais = [];
     let pesosAtivos = [];
     let classificacao = [];
+    let metadados = [];
     let area = [];
+    let patrimonioCampusAno = [];
+    let patrimonioMapa = [];
 
     function brl(v) {
       return Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -291,6 +367,51 @@
         `<div class="muted">Suporte: ${suporte.unidades_observacionais || 0} unidades observacionais; minimo operacional ${suporte.minimo_operacional || 'n/a'}.</div>` +
         tabela(['Termo GAM', 'Status', 'Evidencia'], rows);
     }
+    function avaliarIndicadores() {
+      const nomes = Object.keys(pesoPorIndicador());
+      return nomes.map(ind => {
+        const valores = indicadores.map(r => num(r[ind]));
+        const numericos = valores.filter(v => v !== null);
+        const ausentes = valores.length - numericos.length;
+        const zeros = numericos.filter(v => v === 0).length;
+        const min = numericos.length ? Math.min(...numericos) : null;
+        const max = numericos.length ? Math.max(...numericos) : null;
+        let status = 'ativo';
+        let usar = true;
+        let observacao = 'Indicador numerico com variacao no snapshot.';
+        if (!numericos.length) {
+          status = 'sem_dados';
+          usar = false;
+          observacao = 'Sem valores numericos suficientes.';
+        } else if (max === min) {
+          status = 'sem_variacao';
+          usar = false;
+          observacao = 'Sem variacao entre campi; nao diferencia o ranking.';
+        } else if (ausentes > 0) {
+          status = 'parcial';
+          observacao = 'Ha valores ausentes; usar com cautela.';
+        }
+        const meta = metadados.find(m => m.Indicador === ind) || {};
+        return { indicador: ind, status, usar, n: numericos.length, ausentes, zeros, min, max, observacao, limite: meta.Limite_Atual || '' };
+      });
+    }
+    function renderQualidade() {
+      const q = avaliarIndicadores();
+      const rows = q.map(r => [
+        `<span class="${r.usar ? 'quality-row-active' : 'quality-row-muted'}">${r.indicador}</span>`,
+        r.usar ? '<span class="badge ok">ativo</span>' : `<span class="badge low">${r.status}</span>`,
+        r.usar ? 'SIM' : 'NAO',
+        r.n,
+        r.ausentes,
+        r.zeros,
+        r.min === null ? '' : formatarCelula(r.indicador, r.min),
+        r.max === null ? '' : formatarCelula(r.indicador, r.max),
+        r.limite || r.observacao
+      ]);
+      document.getElementById('qualidade-indicadores').innerHTML = tabela(['Indicador', 'Status', 'Score', 'N', 'Ausentes', 'Zeros', 'Min', 'Max', 'Observacao'], rows);
+      document.getElementById('m-ativos').textContent = q.filter(r => r.usar).length.toLocaleString('pt-BR');
+      document.getElementById('m-lacunas').textContent = q.filter(r => !r.usar).length.toLocaleString('pt-BR');
+    }
     function formatarCelula(header, valor) {
       const h = String(header || '');
       if (/R\$|valor|gasto/i.test(h)) return brl(num(valor) || 0);
@@ -332,7 +453,9 @@
     }
     function calcularScores() {
       const pesos = pesoPorIndicador();
-      const indicadoresNomes = Object.keys(pesos);
+      const qualidade = avaliarIndicadores();
+      const ativos = new Set(qualidade.filter(q => q.usar).map(q => q.indicador));
+      const indicadoresNomes = Object.keys(pesos).filter(ind => ativos.has(ind));
       const limites = {};
       indicadoresNomes.forEach(ind => {
         const vals = indicadores.map(r => num(r[ind])).filter(v => v !== null);
@@ -355,6 +478,79 @@
         return scores;
       }).sort((a, b) => b.Geral - a.Geral);
     }
+    function pesosAHPAgregados() {
+      const qualidade = avaliarIndicadores();
+      const ativos = new Set(qualidade.filter(q => q.usar).map(q => q.indicador));
+      const pesos = pesoPorIndicador();
+      const brutos = {};
+      Object.keys(pesos).forEach(ind => {
+        if (!ativos.has(ind)) return;
+        brutos[ind] = (pesos[ind].ODS_9 || 0) + (pesos[ind].ODS_11 || 0) + (pesos[ind].ODS_12 || 0);
+      });
+      const total = Object.values(brutos).reduce((s, v) => s + v, 0);
+      if (total <= 0) return {};
+      const normalizados = {};
+      Object.keys(brutos).forEach(ind => normalizados[ind] = brutos[ind] / total);
+      return normalizados;
+    }
+    function calcularTOPSIS() {
+      const pesos = pesoPorIndicador();
+      const pesosAHP = pesosAHPAgregados();
+      const criterios = Object.keys(pesosAHP);
+      if (!criterios.length || !indicadores.length) return [];
+      const limites = {};
+      criterios.forEach(ind => {
+        const vals = indicadores.map(r => num(r[ind])).filter(v => v !== null);
+        limites[ind] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals) } : { min: null, max: null };
+      });
+      function valorCriterio(row, ind) {
+        const valor = num(row[ind]) || 0;
+        if (pesos[ind].sentido === 'contextual') {
+          return normalizarValor(valor, limites[ind].min, limites[ind].max, 'contextual') * 100;
+        }
+        return valor;
+      }
+      const norm = {};
+      criterios.forEach(ind => {
+        const somaQuadrados = indicadores.reduce((s, row) => {
+          const v = valorCriterio(row, ind);
+          return s + v * v;
+        }, 0);
+        norm[ind] = Math.sqrt(somaQuadrados) || 1;
+      });
+      const matriz = indicadores.map(row => {
+        const vals = {};
+        criterios.forEach(ind => {
+          vals[ind] = (valorCriterio(row, ind) / norm[ind]) * pesosAHP[ind];
+        });
+        return { Campus: row.Campus, vals };
+      });
+      const idealPos = {};
+      const idealNeg = {};
+      criterios.forEach(ind => {
+        const valores = matriz.map(r => r.vals[ind]);
+        const sentido = pesos[ind].sentido;
+        if (sentido === 'minimizar') {
+          idealPos[ind] = Math.min(...valores);
+          idealNeg[ind] = Math.max(...valores);
+        } else {
+          idealPos[ind] = Math.max(...valores);
+          idealNeg[ind] = Math.min(...valores);
+        }
+      });
+      return matriz.map(row => {
+        let dPos = 0;
+        let dNeg = 0;
+        criterios.forEach(ind => {
+          dPos += Math.pow(row.vals[ind] - idealPos[ind], 2);
+          dNeg += Math.pow(row.vals[ind] - idealNeg[ind], 2);
+        });
+        dPos = Math.sqrt(dPos);
+        dNeg = Math.sqrt(dNeg);
+        const closeness = (dPos + dNeg) ? dNeg / (dPos + dNeg) : 0;
+        return { Campus: row.Campus, TOPSIS: closeness * 100, dPos, dNeg };
+      }).sort((a, b) => b.TOPSIS - a.TOPSIS);
+    }
     function classificacaoPorIndicador() {
       const out = {};
       classificacao.forEach(c => {
@@ -369,7 +565,9 @@
     }
     function calcularScoresESG() {
       const cfg = classificacaoPorIndicador();
-      const indicadoresNomes = Object.keys(cfg);
+      const qualidade = avaliarIndicadores();
+      const ativos = new Set(qualidade.filter(q => q.usar).map(q => q.indicador));
+      const indicadoresNomes = Object.keys(cfg).filter(ind => ativos.has(ind));
       const limites = {};
       indicadoresNomes.forEach(ind => {
         const vals = indicadores.map(r => num(r[ind])).filter(v => v !== null);
@@ -408,6 +606,12 @@
         scores.map(s => [s.Campus, badge(s.ODS_9), badge(s.ODS_11), badge(s.ODS_12), badge(s.Geral)])
       );
     }
+    function renderTOPSIS(topsis) {
+      document.getElementById('topsis-ranking').innerHTML = tabela(
+        ['Posicao', 'Campus', 'Proximidade ideal'],
+        topsis.map((s, i) => [i + 1, s.Campus, badge(s.TOPSIS)])
+      );
+    }
     function renderClassificacao() {
       const headers = ['Indicador', 'Classe principal', 'ODS 9', 'ODS 11', 'ODS 12', 'E', 'S', 'G', 'Justificativa'];
       const rows = classificacao.map(c => [
@@ -426,6 +630,15 @@
     function renderBrutos() {
       const headers = Object.keys(indicadores[0] || {});
       document.getElementById('brutos').innerHTML = tabela(headers, indicadores.map(r => headers.map(h => formatarCelula(h, r[h]))));
+    }
+    function renderPatrimonioTabela() {
+      const el = document.getElementById('patrimonio-tabela');
+      if (!patrimonioCampusAno.length) {
+        el.innerHTML = '<div class="muted">dados/patrimonio_imobiliario_campus_ano.json indisponivel. Gere com scripts/gerar_patrimonio_imobiliario.py.</div>';
+        return;
+      }
+      const headers = Object.keys(patrimonioCampusAno[0] || {});
+      el.innerHTML = tabela(headers, patrimonioCampusAno.map(r => headers.map(h => formatarCelula(h, r[h]))));
     }
     function renderPesos() {
       const headers = ['Indicador', 'Sentido', 'ODS 9', 'ODS 11', 'ODS 12'];
@@ -459,6 +672,13 @@
         },
         options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } } }
       });
+      const topsis = calcularTOPSIS();
+      if (charts.topsis) charts.topsis.destroy();
+      charts.topsis = new Chart(document.getElementById('chart-topsis'), {
+        type: 'bar',
+        data: { labels: topsis.map(s => s.Campus), datasets: [{ label: 'TOPSIS', data: topsis.map(s => s.TOPSIS), backgroundColor: '#1f7a8c' }] },
+        options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { min: 0, max: 100 } } }
+      });
       if (area.length) {
         if (charts.area) charts.area.destroy();
         charts.area = new Chart(document.getElementById('chart-area'), {
@@ -470,6 +690,25 @@
               { label: 'Area total', data: area.map(r => num(r['Ãrea total mÂ²']) || num(r['Área total m²']) || 0), borderColor: '#2e7d32', tension: 0.2 }
             ]
           },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+      }
+      if (patrimonioCampusAno.length) {
+        const anos = [...new Set(patrimonioCampusAno.map(r => r.Ano))].sort();
+        const campi = [...new Set(patrimonioCampusAno.map(r => r.Campus))].sort();
+        const datasets = campi.map((campus, i) => ({
+          label: campus,
+          data: anos.map(ano => {
+            const row = patrimonioCampusAno.find(r => r.Ano === ano && r.Campus === campus);
+            return row ? (num(row.Area_Utilizacao_m2) || 0) : 0;
+          }),
+          borderColor: ['#0f4c81', '#2e7d32', '#a16207', '#475569', '#b91c1c'][i % 5],
+          tension: 0.2
+        }));
+        if (charts.patrimonio) charts.patrimonio.destroy();
+        charts.patrimonio = new Chart(document.getElementById('chart-patrimonio'), {
+          type: 'line',
+          data: { labels: anos, datasets },
           options: { responsive: true, maintainAspectRatio: false }
         });
       }
@@ -515,19 +754,58 @@
       renderPesos();
       renderBrutos();
       renderClassificacao();
+      renderPatrimonioTabela();
+      renderMapaPatrimonio();
+      renderQualidade();
       const scores = calcularScores();
       const scoresESG = calcularScoresESG();
+      const topsis = calcularTOPSIS();
       renderMetricas(scores);
       renderScores(scores);
+      renderTOPSIS(topsis);
       renderGraficos(scores, scoresESG);
+    }
+    function renderMapaPatrimonio() {
+      const el = document.getElementById('mapa-patrimonio');
+      if (!patrimonioMapa.length) {
+        el.innerHTML = '<div class="muted">dados/patrimonio_imobiliario_mapa.json indisponivel. Gere com scripts/gerar_patrimonio_imobiliario.py.</div>';
+        return;
+      }
+      const pontos = patrimonioMapa.filter(p => num(p.Latitude) !== null && num(p.Longitude) !== null);
+      if (!pontos.length) {
+        el.innerHTML = '<div class="muted">Sem coordenadas validas para mapa.</div>';
+        return;
+      }
+      const lats = pontos.map(p => num(p.Latitude));
+      const lons = pontos.map(p => num(p.Longitude));
+      const minLat = Math.min(...lats);
+      const maxLat = Math.max(...lats);
+      const minLon = Math.min(...lons);
+      const maxLon = Math.max(...lons);
+      const w = 760;
+      const h = 420;
+      const pad = 34;
+      const x = lon => pad + ((lon - minLon) / ((maxLon - minLon) || 1)) * (w - pad * 2);
+      const y = lat => h - pad - ((lat - minLat) / ((maxLat - minLat) || 1)) * (h - pad * 2);
+      const marcas = pontos.map((p, i) => {
+        const px = x(num(p.Longitude));
+        const py = y(num(p.Latitude));
+        const desloca = i % 2 === 0 ? -8 : 14;
+        const titulo = `${p.Campus} - ${p.Cidade}: ${p.Descricao}`;
+        return `<g><title>${titulo}</title><circle class="map-point" cx="${px}" cy="${py}" r="6"></circle><text class="map-label" x="${px + 9}" y="${py + desloca}">${p.Campus}</text><text class="map-city" x="${px + 9}" y="${py + desloca + 12}">${p.Cidade}</text></g>`;
+      }).join('');
+      el.innerHTML = `<svg class="mapa-patrimonio" viewBox="0 0 ${w} ${h}" role="img" aria-label="Mapa patrimonial por latitude e longitude"><rect x="0" y="0" width="${w}" height="${h}" fill="#f8fafc"></rect><text x="${pad}" y="24" class="map-city">Pontos patrimoniais do ano mais recente disponivel</text>${marcas}</svg>`;
     }
     async function iniciar() {
       try {
-        const [indJson, pesosJson, classJson, areaJson, protocoloJson, gamJson] = await Promise.all([
+        const [indJson, pesosJson, classJson, metaJson, areaJson, patrimonioCampusAnoJson, patrimonioMapaJson, protocoloJson, gamJson] = await Promise.all([
           carregarJson(arquivos.indicadores),
           carregarJson(arquivos.pesos),
           carregarJson(arquivos.classificacao),
+          carregarJson(arquivos.metadados),
           carregarJson(arquivos.area),
+          carregarJson(arquivos.patrimonioCampusAno).catch(() => [[]]),
+          carregarJson(arquivos.patrimonioMapa).catch(() => [[]]),
           carregarJson(arquivos.protocoloZuur),
           carregarJson(arquivos.analiseGam)
         ]);
@@ -535,7 +813,10 @@
         pesosOriginais = linhasComoObjetos(pesosJson);
         pesosAtivos = JSON.parse(JSON.stringify(pesosOriginais));
         classificacao = linhasComoObjetos(classJson);
+        metadados = linhasComoObjetos(metaJson);
         area = linhasComoObjetos(areaJson);
+        patrimonioCampusAno = linhasComoObjetos(patrimonioCampusAnoJson);
+        patrimonioMapa = linhasComoObjetos(patrimonioMapaJson);
         atualizar();
         renderProtocoloZuur(protocoloJson);
         renderAnaliseGam(gamJson);

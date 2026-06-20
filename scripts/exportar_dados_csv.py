@@ -13,7 +13,15 @@ ARQUIVOS_CANONICOS = [
     "indicadores_ods.json",
     "pesos_ods.json",
     "classificacao_ods_esg.json",
+    "metadados_indicadores.json",
+    "pesos_categorias_ods_esg.json",
+    "regras_peso_chamado_ods_esg.json",
+    "multiplicadores_importancia_chamado.json",
+    "patrimonio_imobiliario.json",
+    "patrimonio_imobiliario_campus_ano.json",
+    "patrimonio_imobiliario_mapa.json",
     "area_manutencao.json",
+    "modelo_area_campus.json",
 ]
 
 

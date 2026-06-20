@@ -1,0 +1,14 @@
+﻿Campo_Chamado,Peso_Evidencia,Uso_No_Calculo,ODS_9_Infraestrutura,ODS_11_Cidades_Sustentaveis,ODS_12_Consumo_Responsavel,ESG_E_Ambiental,ESG_S_Social,ESG_G_Governanca,Observacao
+Categoria_Completa,3.0,familia_tecnica,1.0,1.0,1.0,1.0,1.0,1.0,Campo mais forte para identificar familia de manutencao e herdar pesos de pesos_categorias_ods_esg.
+Classificacao_IA,2.5,familia_tecnica_validavel,1.0,1.0,1.0,1.0,1.0,1.0,Usar quando a classificacao IA estiver disponivel; nao deve substituir categoria validada sem regra de confianca.
+Importancia_Criticidade,2.5,multiplicador_de_risco,1.1,1.25,1.0,1.0,1.3,1.2,"Aumenta peso social e governanca quando houver criticidade alta, urgencia, risco, paralisacao ou seguranca."
+Titulo_Chamado,2.0,evidencia_textual_curta,1.0,1.0,1.0,1.0,1.0,1.0,"Campo curto, mas geralmente contem sintoma e local; bom para detectar vazamento, ar-condicionado, eletrica, banheiro, sala."
+Descricao_GLPI,2.0,evidencia_textual_detalhada,1.0,1.0,1.0,1.0,1.0,1.0,"Campo importante para confirmar causa, impacto, recorrencia, ambiente e uso social."
+Titulo_OSM,1.5,evidencia_execucao,1.0,1.0,1.0,1.0,1.0,1.0,Titulo da ordem de servico ajuda a confirmar a natureza tecnica depois da triagem inicial.
+Descricao_OSM,2.0,evidencia_execucao_detalhada,1.0,1.0,1.0,1.0,1.0,1.0,"Descricao da OSM pode revelar solucao, material, recorrencia, causa fisica e impacto real."
+Solucao_OSM,1.8,evidencia_pos_execucao,0.9,0.9,1.15,1.1,0.9,1.15,"Campo util para custo, material, desperdicio, resolutividade e recorrencia; fortalece ODS 12 e Governanca."
+Valor_Custo,1.3,pressao_orcamentaria,0.8,0.7,1.4,0.9,0.7,1.4,Nao define ODS sozinho; pondera ODS 12 e Governanca quando associado a categoria tecnica.
+Campus_Area,1.0,normalizacao_contextual,0.9,1.1,0.9,1.1,1.0,0.9,Nao e evidencia textual; normaliza chamados e custos por campus/area quando houver fonte verificavel.
+Data_Periodo,0.8,sazonalidade,0.8,0.8,0.8,0.8,0.8,0.8,"Ajuda a associar chamados a chuva, calor, ciclos letivos e periodos de restricao orcamentaria."
+Fonte_Climatica,1.2,condicionante_ambiental,0.9,1.1,0.8,1.4,1.1,0.8,"Chuva/calor modulam risco, mas nao classificam o chamado isoladamente."
+Decisao_Governamental,1.2,condicionante_governanca,0.8,0.8,1.2,0.8,0.8,1.5,"Contingenciamento, liberacao, obrigacao normativa ou contrato em renovacao alteram cenario decisorio, nao a natureza tecnica do chamado."

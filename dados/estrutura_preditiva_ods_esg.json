@@ -1,0 +1,109 @@
+{
+  "artefato": "estrutura_preditiva_ods_esg",
+  "versao": "2026-06-19",
+  "base_metodologica": "Projeto de tese: Modelo Preditivo de Governanca Sustentavel na Manutencao Predial de Universidades Publicas sob a Perspectiva dos Biossistemas Construidos.",
+  "leitura": "A estrutura conecta classificacao de chamados, custo executado, custo previsto por IA, quantidade observada, quantidade prevista, clima e decisoes governamentais ao painel ODS/ESG e ao ranking TOPSIS/AHP.",
+  "unidade_decisao": "campus, campus-periodo ou campus-periodo-familia_categoria",
+  "camadas": [
+    {
+      "camada": "area_campus",
+      "status_atual": "contrato_preparado",
+      "indicadores": [
+        "Area_construida_m2_por_campus",
+        "Area_total_m2_por_campus",
+        "Densidade_chamados_por_1000m2",
+        "Custo_executado_por_m2",
+        "Custo_previsto_por_m2",
+        "Chamados_previstos_por_1000m2"
+      ],
+      "efeito_no_painel": "Permite comparar campi de tamanhos diferentes sem favorecer automaticamente unidades menores ou penalizar unidades maiores.",
+      "cautela": "Por enquanto ha apenas serie institucional agregada de area; area por campus deve permanecer como pendente ate existir fonte verificavel."
+    },
+    {
+      "camada": "custo_executado",
+      "status_atual": "parcial",
+      "indicadores": [
+        "Valor_total_gasto_R$",
+        "Custo_executado_por_categoria",
+        "Custo_executado_por_campus",
+        "Custo_executado_por_ODS_ESG"
+      ],
+      "efeito_no_painel": "Mostra a pressao orcamentaria ja ocorrida e alimenta ODS 12 e Governanca.",
+      "cautela": "Gasto registrado nao representa necessariamente custo total real se houver chamados sem valor."
+    },
+    {
+      "camada": "custo_previsto_ia",
+      "status_atual": "estrutura_preparada",
+      "indicadores": [
+        "Custo_previsto_30_60_90_dias",
+        "Delta_custo_previsto_vs_executado",
+        "Risco_estouro_orcamentario",
+        "Intervalo_incerteza_custo"
+      ],
+      "efeito_no_painel": "Permite simular tendencia futura do score ODS/ESG e antecipar prioridade TOPSIS antes do gasto ocorrer.",
+      "cautela": "Depende de validacao temporal fora da amostra e metricas MAE, RMSE, MAPE ou R2."
+    },
+    {
+      "camada": "quantidade_chamados_observada",
+      "status_atual": "ativo",
+      "indicadores": [
+        "N_chamados_total",
+        "N_infra_critica",
+        "N_em_espaco_coletivo",
+        "Razao_preventiva_corretiva"
+      ],
+      "efeito_no_painel": "Mostra pressao operacional atual por campus e por familia tecnica.",
+      "cautela": "Campus maior tende a gerar mais chamados; preferir tambem densidade por area ou por populacao usuaria."
+    },
+    {
+      "camada": "quantidade_chamados_prevista_ia",
+      "status_atual": "estrutura_preparada",
+      "indicadores": [
+        "Chamados_previstos_30_60_90_dias",
+        "Pico_demanda_previsto",
+        "Delta_chamados_previsto_vs_media",
+        "Intervalo_incerteza_demanda"
+      ],
+      "efeito_no_painel": "Permite prever piora ou melhora futura dos indicadores ODS/ESG antes de a demanda entrar no GLPI.",
+      "cautela": "Depende de serie temporal por campus/categoria e validacao rolling-origin."
+    },
+    {
+      "camada": "chuva_prevista",
+      "status_atual": "estrutura_preparada",
+      "indicadores": [
+        "Precipitacao_prevista_mm",
+        "Risco_infiltracao_drenagem",
+        "Risco_hidrossanitario",
+        "Risco_area_externa"
+      ],
+      "efeito_no_painel": "Aumenta peso de categorias sensiveis a chuva, como telhado, calhas, drenagem, infiltracao, hidrossanitaria e area externa.",
+      "cautela": "Previsao climatica deve vir de fonte meteorologica rastreavel e ser registrada por campus/periodo."
+    },
+    {
+      "camada": "calor_previsto",
+      "status_atual": "estrutura_preparada",
+      "indicadores": [
+        "Temperatura_maxima_prevista",
+        "Indice_calor_previsto",
+        "Risco_climatizacao",
+        "Risco_conforto_termico"
+      ],
+      "efeito_no_painel": "Aumenta peso de climatizacao, eletrica associada, salas de aula, laboratorios e espacos coletivos.",
+      "cautela": "Nao usar calor previsto como causa unica; deve entrar como condicionante ambiental de risco."
+    },
+    {
+      "camada": "decisao_governamental",
+      "status_atual": "estrutura_preparada",
+      "indicadores": [
+        "Restricao_orcamentaria",
+        "Liberacao_orcamentaria",
+        "Prioridade_institucional",
+        "Obrigacao_normativa",
+        "Contrato_em_renovacao"
+      ],
+      "efeito_no_painel": "Permite simular cenarios de contingenciamento, suplementacao, obrigacao normativa ou foco institucional, alterando pesos de Governanca e ODS 12.",
+      "cautela": "Decisao governamental precisa ser registrada como cenario explicito, nao como dado observado de manutencao."
+    }
+  ],
+  "formula_conceitual": "Score futuro = f(indicadores observados, area por campus, previsao de custo, previsao de demanda, risco climatico, restricao/decisao governamental, pesos ODS/ESG, pesos AHP, ranking TOPSIS)."
+}

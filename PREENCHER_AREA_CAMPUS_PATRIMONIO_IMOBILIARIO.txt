@@ -1,0 +1,92 @@
+MODELO DE PREENCHIMENTO - AREA POR CAMPUS
+Referencia principal prevista: documento de patrimonio imobiliario
+
+Orientacao:
+Preencher somente com dados verificaveis no documento de patrimonio imobiliario ou em outra fonte institucional indicada.
+Quando o dado nao estiver presente ou nao puder ser confirmado, preencher exatamente:
+Informação insuficiente para verificar.
+
+Campos:
+- Campus: nome do campus ou unidade.
+- Area_Construida_m2: area construida em metros quadrados.
+- Area_Total_m2: area total do terreno/campus em metros quadrados, quando houver.
+- Ano_Referencia: ano do documento, levantamento, medicao ou cadastro patrimonial.
+- Fonte: nome do documento e, se possivel, pagina, tabela, anexo ou setor responsavel.
+- Status: usar validado, pendente ou Informação insuficiente para verificar.
+- Observacao: registrar duvidas, diferencas entre fontes, soma de blocos ou limitacoes.
+
+Uso posterior no repositorio:
+Depois de preenchido, estes dados serao incorporados em:
+- dados/modelo_area_campus.json
+- dados_csv/modelo_area_campus.csv
+
+Eles servirao para normalizar indicadores como:
+- chamados por campus;
+- chamados por area construida;
+- custo executado por area;
+- custo previsto por IA por area;
+- comparacao entre campus no painel ODS/ESG;
+- apoio futuro ao painel de decisao TOPSIS/AHP.
+
+======================================================================
+
+Campus: Campus Jorge Amado
+Area_Construida_m2:
+Area_Total_m2:
+Ano_Referencia:
+Fonte:
+Status:
+Observacao:
+
+======================================================================
+
+Campus: Campus Maria Felipa - Jequie
+Area_Construida_m2:
+Area_Total_m2:
+Ano_Referencia:
+Fonte:
+Status:
+Observacao:
+
+======================================================================
+
+Campus: Campus Paulo Freire
+Area_Construida_m2:
+Area_Total_m2:
+Ano_Referencia:
+Fonte:
+Status:
+Observacao:
+
+======================================================================
+
+Campus: Campus Sosigenes Costa
+Area_Construida_m2:
+Area_Total_m2:
+Ano_Referencia:
+Fonte:
+Status:
+Observacao:
+
+======================================================================
+
+Campus: Reitoria
+Area_Construida_m2:
+Area_Total_m2:
+Ano_Referencia:
+Fonte:
+Status:
+Observacao:
+
+======================================================================
+
+Outras unidades, predios ou observacoes gerais:
+
+Unidade/Campus:
+Area_Construida_m2:
+Area_Total_m2:
+Ano_Referencia:
+Fonte:
+Status:
+Observacao:
+

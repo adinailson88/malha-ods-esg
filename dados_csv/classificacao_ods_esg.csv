@@ -1,11 +1,11 @@
 ﻿Indicador,Sentido,ODS_9_Infraestrutura,ODS_11_Cidades_Sustentaveis,ODS_12_Consumo_Responsavel,ESG_E_Ambiental,ESG_S_Social,ESG_G_Governanca,Classe_Principal,Justificativa
-N_chamados_total,minimizar,0.1,0.1,0.05,0.2,0.3,0.5,G,Volume total de chamados como proxy de pressao operacional e maturidade da gestao predial.
-N_infra_critica,minimizar,0.3,0.1,0.0,0.1,0.3,0.6,G,Demandas em infraestrutura critica indicam risco operacional e necessidade de governanca preventiva.
-Tempo_medio_resolucao_dias,minimizar,0.2,0.05,0.1,0.0,0.35,0.65,G,Tempo de resolucao mede capacidade de resposta institucional e impacto no uso dos espacos.
-Taxa_resolucao_no_prazo,maximizar,0.2,0.1,0.1,0.0,0.35,0.65,G,Cumprimento de prazo representa desempenho de gestao e confiabilidade do servico.
-N_criticos_alta,minimizar,0.1,0.3,0.05,0.05,0.55,0.4,S,"Criticidade alta afeta seguranca, continuidade de uso e bem-estar da comunidade academica."
-N_em_espaco_coletivo,contextual,0.05,0.25,0.05,0.05,0.7,0.25,S,Chamados em espacos coletivos se conectam diretamente ao uso social do ambiente universitario.
-Densidade_chamados_por_1000m2,minimizar,0.0,0.05,0.05,0.35,0.25,0.4,E,Densidade por area relaciona demanda de manutencao ao uso eficiente do ativo fisico.
-Razao_preventiva_corretiva,maximizar,0.05,0.05,0.3,0.45,0.1,0.45,E,"Maior peso de manutencao preventiva reduz desperdicio, falhas recorrentes e consumo corretivo."
-Valor_total_gasto_R$,minimizar,0.0,0.0,0.2,0.25,0.05,0.7,G,Valor gasto em reais representa eficiencia orcamentaria e controle de recursos.
-N_chamados_repetidos,minimizar,0.0,0.0,0.1,0.25,0.2,0.55,G,Repeticao de chamados sinaliza baixa resolutividade e fragilidade de governanca do ciclo de manutencao.
+N_chamados_total,minimizar,0.05,0.05,0.05,0.15,0.25,0.6,G,Volume total de chamados e proxy de pressao operacional; deve ser lido com cautela porque campus maiores tendem a registrar mais demandas.
+N_infra_critica,minimizar,0.35,0.05,0.0,0.1,0.25,0.65,G,"Demandas em infraestrutura critica indicam risco operacional, confiabilidade tecnica e necessidade de governanca preventiva."
+Tempo_medio_resolucao_dias,minimizar,0.2,0.1,0.05,0.0,0.35,0.65,G,Tempo de resolucao mede capacidade de resposta institucional e impacto na continuidade de uso dos espacos.
+Taxa_resolucao_no_prazo,maximizar,0.2,0.1,0.05,0.0,0.25,0.75,G,"Cumprimento de prazo representa resolutividade, controle operacional e confiabilidade do servico."
+N_criticos_alta,minimizar,0.05,0.25,0.05,0.05,0.65,0.3,S,"Criticidade alta afeta seguranca, salubridade, continuidade de uso e bem-estar da comunidade academica."
+N_em_espaco_coletivo,contextual,0.05,0.3,0.0,0.05,0.75,0.2,S,Chamados em espacos coletivos se conectam ao uso social do ambiente universitario e a qualidade dos espacos compartilhados.
+Densidade_chamados_por_1000m2,minimizar,0.05,0.1,0.1,0.45,0.25,0.3,E,"Densidade por area relaciona demanda de manutencao, intensidade de uso do ativo fisico e eficiencia espacial."
+Razao_preventiva_corretiva,maximizar,0.05,0.05,0.35,0.5,0.1,0.4,E,"Maior peso da manutencao preventiva tende a reduzir desperdicio, falhas recorrentes, consumo corretivo e deterioracao do ativo."
+Valor_total_gasto_R$,minimizar,0.0,0.0,0.2,0.2,0.05,0.75,G,Valor gasto em reais representa controle orcamentario; deve ser interpretado junto com cobertura de valor e escala do campus.
+N_chamados_repetidos,minimizar,0.0,0.0,0.15,0.3,0.2,0.5,G,"Repeticao de chamados sinaliza baixa resolutividade, desperdicio de recursos e fragilidade no ciclo de manutencao."
