@@ -95,10 +95,87 @@ patrimonial; 3.9 evolução temporal (pendente); 3.10 reprodutibilidade.
 
 ---
 
-## 4. Resultados (a preencher na execução; reconferir corpus)
+## 4. Resultados
 
-4.1 Caracterização do snapshot. 4.2 Indicadores incluídos × excluídos. 4.3 Ranking por ODS
-e score geral. 4.4 TOPSIS e concordância com a soma ponderada. 4.5 Leitura patrimonial.
+> Os valores reportados nesta seção referem-se ao snapshot de 20 de junho de 2026,
+> regenerado após a correção do indicador de razão entre manutenção preventiva e corretiva
+> (Seção 6), e devem ser reconferidos a cada nova execução do motor, uma vez que a base de
+> chamados é incremental.
+
+### 4.1 Caracterização do snapshot
+
+A análise incidiu sobre cinco unidades de decisão — os campi Jorge Amado, Paulo Freire,
+Sosígenes Costa e Maria Felipa, em Jequié, além da Reitoria —, tomadas como alternativas
+comparáveis no recorte transversal disponível. O volume de chamados classificados por
+unidade revela acentuada heterogeneidade de escala: registram-se 4.080 chamados no campus
+Sosígenes Costa, 3.740 no campus Jorge Amado, 3.684 no campus Paulo Freire e 2.363 na
+Reitoria, ao passo que o campus Maria Felipa contabiliza apenas 5 registros no período. Essa
+assimetria é determinante para a leitura subsequente, pois a unidade de volume muito baixo
+comprime o intervalo de normalização e, conforme se demonstra adiante, condiciona de modo
+expressivo a posição relativa das demais.
+
+### 4.2 Indicadores incluídos e excluídos
+
+Em observância ao protocolo de exploração de dados de Zuur, Ieno e Elphick (2010), cada
+indicador foi submetido a uma auditoria de variância antes de integrar o escore composto, de
+modo que apenas os critérios com variação efetiva entre as unidades participam da ordenação.
+Dos dez indicadores previstos, cinco mostraram-se ativos no snapshot analisado — número total
+de chamados, número de chamados de infraestrutura crítica, número de chamados em espaço
+coletivo, razão entre manutenção preventiva e corretiva, e valor total gasto. Os cinco
+restantes foram exibidos na auditoria como lacunas e mantidos fora do cálculo: o tempo médio
+de resolução e a taxa de resolução no prazo permanecem vazios por ausência de data de
+conclusão padronizada; o número de chamados críticos de alta criticidade apresenta-se
+constante e nulo; a densidade de chamados por área não pôde ser computada enquanto a área
+construída por campus não estiver materializada; e o número de chamados repetidos depende de
+uma chave de recorrência ainda inexistente. Convém registrar que o indicador de razão entre
+manutenção preventiva e corretiva só se incorporou ao conjunto ativo após a correção da
+heurística descrita na Seção 6, sem a qual permaneceria como quase-lacuna por variância
+praticamente nula.
+
+### 4.3 Ranking por ODS e escore geral
+
+A soma ponderada normalizada por Objetivo de Desenvolvimento Sustentável produz, para o
+escore geral, a seguinte ordenação decrescente: campus Maria Felipa (53,9), Reitoria (48,4),
+campus Jorge Amado (36,8), campus Paulo Freire (34,3) e campus Sosígenes Costa (23,3). A
+decomposição por dimensão evidencia, contudo, que essa hierarquia não é uniforme entre os
+objetivos. No ODS 9, voltado à infraestrutura, o campus Maria Felipa alcança o valor máximo
+(80,0), seguido a distância pela Reitoria (39,4), enquanto as unidades de maior volume obtêm
+escores baixos (16,1; 15,2; 10,0), efeito direto do sentido minimizador dos indicadores de
+contagem combinado à compressão do intervalo pela unidade de baixo volume. No ODS 12,
+associado ao consumo responsável e ao gasto, a ordenação se inverte parcialmente, com
+destaque para os campi Paulo Freire (71,8) e a Reitoria (69,3). Essa divergência dimensional
+constitui, em si, um resultado relevante, pois desaconselha a leitura do escore geral de
+forma isolada e recomenda que a priorização orçamentária considere o perfil de cada unidade
+em cada objetivo.
+
+### 4.4 TOPSIS e concordância com a soma ponderada
+
+A ordenação por proximidade à solução ideal produz hierarquia distinta da soma ponderada:
+campus Jorge Amado (56,7), Reitoria (52,6), campus Maria Felipa (44,0), campus Paulo Freire
+(39,3) e campus Sosígenes Costa (33,8). A comparação entre os dois métodos revela
+convergência nos extremos inferiores e na posição intermediária — a Reitoria figura em
+segundo lugar em ambas as abordagens e o campus Sosígenes Costa ocupa a última posição nas
+duas —, mas diverge de modo expressivo no topo: a unidade de baixo volume, que lidera a soma
+ponderada por força da normalização min–max, recua à terceira posição sob o TOPSIS, ao passo
+que o campus Jorge Amado ascende à liderança. Tal divergência confirma que a primazia do
+campus Maria Felipa na soma ponderada é, em larga medida, artefato de escala, e não expressão
+de desempenho efetivo. Recomenda-se, por isso, quantificar a concordância entre as
+ordenações por meio de coeficiente de correlação de postos e reportar o ranking com e sem a
+unidade de baixo volume, procedimento que isola as posições estáveis daquelas sensíveis à
+composição do conjunto de alternativas.
+
+### 4.5 Leitura patrimonial
+
+A dimensão patrimonial, ainda que não integre diretamente o escore composto, oferece contexto
+indispensável à interpretação. O valor total registrado em chamados concentra-se no campus
+Sosígenes Costa (R$ 8,50 milhões), seguido pelos campi Jorge Amado (R$ 5,95 milhões) e Paulo
+Freire (R$ 3,07 milhões) e pela Reitoria (R$ 2,21 milhões), sem valor apreciável no campus
+Maria Felipa. Observa-se que as unidades de maior dispêndio são justamente as penalizadas no
+escore geral pelo sentido minimizador dos indicadores de volume e de gasto, o que reforça a
+necessidade de normalizar tais critérios por exposição física. Essa normalização permanece,
+todavia, latente enquanto a área construída por campus não for materializada, mantendo
+indisponível o indicador de densidade de chamados por área e limitando, no estado atual, a
+leitura ambiental do modelo.
 
 ---
 
@@ -182,19 +259,29 @@ como lacunas de qualidade, sem integrar o escore composto.
 
 Duas ressalvas de implementação, identificadas no código do motor de indicadores, merecem
 registro explícito. A primeira refere-se ao indicador de razão entre manutenção preventiva e
-corretiva: na versão anterior, quando a contagem de chamados corretivos era nula, a rotina
-retornava a contagem absoluta de chamados preventivos em lugar de uma razão, o que introduzia
-valores em escala incompatível e comprometia a normalização de um indicador de sentido
-maximizador. O cálculo foi corrigido para a proporção de manutenção preventiva, limitada ao
-intervalo unitário, de modo que a unidade indica predominância integral de preventiva e o
-valor nulo indica predominância integral de corretiva; cabe ressaltar que os snapshots
-gerados antes da correção preservam os valores anteriores, sendo necessária a reexecução do
-motor para sua regeneração, e que a mesma correção deve ser replicada no motor do repositório
-hub, que constitui a fonte autenticada dos dados. A segunda diz respeito à presença de uma
-unidade com
-volume muito baixo de chamados no snapshot, a qual comprime o intervalo de normalização e
-pode dominar artificialmente o resultado, justificando que o ranking seja reportado com e sem
-essa unidade, ou que se estabeleça um volume mínimo de elegibilidade.
+corretiva, que demandou correção em dois níveis. No primeiro, relativo ao cálculo, a rotina
+anterior, quando a contagem de chamados corretivos era nula, retornava a contagem absoluta de
+chamados preventivos em lugar de uma razão, introduzindo valores em escala incompatível que
+comprometiam a normalização de um indicador de sentido maximizador; o cálculo foi corrigido
+para a proporção de manutenção preventiva, limitada ao intervalo unitário, de modo que a
+unidade indica predominância integral de preventiva e o valor nulo indica predominância
+integral de corretiva. No segundo nível, relativo à fonte, a inspeção dos chamados
+classificados revelou que a taxonomia de categorias não possui rótulo explícito de
+"corretiva": apenas o ramo de manutenção preventiva é nomeado, de sorte que a heurística
+original, ao buscar o termo "corretiva", fixava a contagem de corretivos em zero e reduzia o
+indicador a uma quase-lacuna de variância praticamente nula. Adotou-se, então, a definição de
+corretiva por exclusão — todo chamado classificado que não seja preventiva é contabilizado
+como corretivo —, o que restituiu a variação efetiva entre as unidades, com proporções de
+manutenção preventiva entre 0,26 e 0,34 nos campi de volume regular. Ambas as correções foram
+replicadas no motor do repositório hub, que constitui a fonte autenticada dos dados, e os
+snapshots foram regenerados; registra-se, contudo, que a definição por exclusão é uma medida
+provisória, a ser substituída pela marcação explícita de "corretiva" na classificação de
+origem quando esta estiver disponível. A segunda ressalva diz respeito à presença de uma
+unidade com volume muito baixo de chamados no snapshot, a qual comprime o intervalo de
+normalização e pode dominar artificialmente o resultado — efeito que se materializou na
+liderança do campus Maria Felipa na soma ponderada e na sua queda à terceira posição sob o
+TOPSIS (Seção 4.4) —, justificando que o ranking seja reportado com e sem essa unidade, ou
+que se estabeleça um volume mínimo de elegibilidade.
 
 Por fim, a ausência de série histórica validada impede, no estado atual, qualquer afirmação
 de tendência temporal, uma vez que o snapshot disponível é transversal e não contempla a
@@ -237,5 +324,10 @@ predial universitária.
   Limitações, Discussão e Conclusão em prosa final (estilo do autor), plano de
   figuras/tabelas. Correção do indicador razão preventiva/corretiva aplicada no
   `motor_ods.py` do eixo e do hub (`repo_malha_atual`); Limitações ajustadas para refletir
-  a correção. Pendente: reexecutar o motor para regenerar snapshots (requer credencial
-  Google) e commit/push do hub.
+  a correção.
+- 2026-06-20 (atualização) — Correção em segundo nível do mesmo indicador: definição de
+  corretiva por exclusão (heurística da fonte), reativando-o como ativo (proporções
+  0,26–0,34). Snapshots regenerados na nuvem via GitHub Actions (hub recalcula a planilha →
+  hub exporta JSON → eixo puxa). Seção 4 (Resultados) redigida em prosa final com os números
+  do snapshot corrigido, incluindo ranking por ODS, escore geral, TOPSIS e leitura
+  patrimonial. Limitações e Controle de versão atualizados.
