@@ -117,6 +117,19 @@
     }
     .quality-row-active { color: var(--green); font-weight: 700; }
     .quality-row-muted { color: var(--muted); }
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 10px 0 12px;
+    }
+    .formula-box {
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      padding: 10px;
+    }
+    .formula-title { color: var(--blue); font-weight: 800; font-size: 12px; text-transform: uppercase; }
+    .formula-box code { display: block; margin-top: 6px; white-space: normal; line-height: 1.45; }
     .guide-list {
       margin: 0;
       padding-left: 18px;
@@ -129,6 +142,7 @@
     @media (max-width: 900px) {
       .span-3, .span-4, .span-5, .span-7, .span-8, .span-12 { grid-column: span 12; }
       .chart { height: 280px; }
+      .formula-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -228,6 +242,11 @@
       <div class="card span-12">
         <h2>Qualidade dos indicadores</h2>
         <div id="qualidade-indicadores"></div>
+      </div>
+
+      <div class="card span-12">
+        <h2>Memoria de calculo dos rankings</h2>
+        <div id="memoria-calculo"></div>
       </div>
 
       <div class="card span-12">
@@ -612,6 +631,56 @@
         topsis.map((s, i) => [i + 1, s.Campus, badge(s.TOPSIS)])
       );
     }
+    function renderMemoriaCalculo(scores, topsis) {
+      const pesos = pesoPorIndicador();
+      const qualidade = avaliarIndicadores();
+      const ativos = new Set(qualidade.filter(q => q.usar).map(q => q.indicador));
+      const pesosTopsis = pesosAHPAgregados();
+      const criterioRows = qualidade.map(q => {
+        const p = pesos[q.indicador] || {};
+        return [
+          q.indicador,
+          q.usar ? '<span class="badge ok">ativo</span>' : `<span class="badge low">${q.status}</span>`,
+          p.sentido || '',
+          q.min === null ? '' : formatarCelula(q.indicador, q.min),
+          q.max === null ? '' : formatarCelula(q.indicador, q.max),
+          (p.ODS_9 || 0).toFixed(3),
+          (p.ODS_11 || 0).toFixed(3),
+          (p.ODS_12 || 0).toFixed(3),
+          ativos.has(q.indicador) ? ((pesosTopsis[q.indicador] || 0) * 100).toFixed(2) + '%' : 'fora'
+        ];
+      });
+      const scoreRows = scores.map((s, i) => [
+        i + 1,
+        s.Campus,
+        badge(s.ODS_9),
+        badge(s.ODS_11),
+        badge(s.ODS_12),
+        badge(s.Geral)
+      ]);
+      const topsisRows = topsis.map((s, i) => [
+        i + 1,
+        s.Campus,
+        s.dPos.toFixed(4),
+        s.dNeg.toFixed(4),
+        badge(s.TOPSIS)
+      ]);
+      document.getElementById('memoria-calculo').innerHTML =
+        '<div class="notice">Esta memoria documenta a forma atual do dashboard. Os pesos sao operacionais e editaveis; ainda nao representam AHP formal com matriz pareada e razao de consistencia.</div>' +
+        '<div class="formula-grid">' +
+          '<div class="formula-box"><div class="formula-title">Normalizacao min-max</div><code>maximizar: r_ij = (x_ij - min_j) / (max_j - min_j)</code><code>minimizar: r_ij = 1 - (x_ij - min_j) / (max_j - min_j)</code><code>contextual: r_ij = 1 - |n_ij - 0,5| x 2</code></div>' +
+          '<div class="formula-box"><div class="formula-title">Score por ODS</div><code>S_i,d = 100 x soma_j(r_ij x w_j,d) / soma_j(w_j,d)</code><code>Score geral_i = (S_i,ODS9 + S_i,ODS11 + S_i,ODS12) / 3</code></div>' +
+          '<div class="formula-box"><div class="formula-title">Pesos TOPSIS</div><code>w_j,T = (w_j,ODS9 + w_j,ODS11 + w_j,ODS12) / soma_j(w_j,ODS9 + w_j,ODS11 + w_j,ODS12)</code><code>v_ij = (x_ij / sqrt(soma_i x_ij^2)) x w_j,T</code></div>' +
+          '<div class="formula-box"><div class="formula-title">Proximidade TOPSIS</div><code>D_i+ = distancia ate a solucao ideal positiva</code><code>D_i- = distancia ate a solucao ideal negativa</code><code>C_i = D_i- / (D_i+ + D_i-) x 100</code></div>' +
+        '</div>' +
+        '<p class="muted">Base bibliografica: Hwang e Yoon (1981) para TOPSIS/MADM; Saaty (2008) para AHP; Zuur, Ieno e Elphick (2009) para auditoria exploratoria antes da composicao de scores; Klumbyte et al. (2021) e Theilig et al. (2024) para MCDM em facilities, ambiente construido e sustentabilidade.</p>' +
+        '<h3>Criterios, pesos e limites usados</h3>' +
+        tabela(['Indicador', 'Uso', 'Sentido', 'Min', 'Max', 'w ODS9', 'w ODS11', 'w ODS12', 'w TOPSIS'], criterioRows) +
+        '<h3>Score ODS por campus</h3>' +
+        tabela(['Rank', 'Campus', 'ODS 9', 'ODS 11', 'ODS 12', 'Score geral'], scoreRows) +
+        '<h3>Detalhe TOPSIS por campus</h3>' +
+        tabela(['Rank', 'Campus', 'D+', 'D-', 'C_i'], topsisRows);
+    }
     function renderClassificacao() {
       const headers = ['Indicador', 'Classe principal', 'ODS 9', 'ODS 11', 'ODS 12', 'E', 'S', 'G', 'Justificativa'];
       const rows = classificacao.map(c => [
@@ -763,6 +832,7 @@
       renderMetricas(scores);
       renderScores(scores);
       renderTOPSIS(topsis);
+      renderMemoriaCalculo(scores, topsis);
       renderGraficos(scores, scoresESG);
     }
     function renderMapaPatrimonio() {
