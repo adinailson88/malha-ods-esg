@@ -403,6 +403,10 @@
         let status = 'ativo';
         let usar = true;
         let observacao = 'Indicador numerico com variacao no snapshot.';
+        // Valor dominante: maior frequencia de um unico valor entre os campi.
+        const freq = {};
+        numericos.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
+        const freqDominante = numericos.length ? Math.max(...Object.values(freq)) : 0;
         if (!numericos.length) {
           status = 'sem_dados';
           usar = false;
@@ -411,6 +415,13 @@
           status = 'sem_variacao';
           usar = false;
           observacao = 'Sem variacao entre campi; nao diferencia o ranking.';
+        } else if (numericos.length >= 3 && freqDominante >= numericos.length - 1) {
+          // Quase-lacuna (Zuur): um unico valor domina (>= N-1 das N unidades),
+          // de modo que o indicador apenas separa uma unidade isolada e nao
+          // diferencia o ranking de forma confiavel. Excluido do score.
+          status = 'quase_sem_variacao';
+          usar = false;
+          observacao = 'Quase sem variacao (valor dominante em quase todos os campi); tratado como quase-lacuna.';
         } else if (ausentes > 0) {
           status = 'parcial';
           observacao = 'Ha valores ausentes; usar com cautela.';
