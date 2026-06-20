@@ -1,0 +1,51 @@
+name: Atualizar patrimonio imobiliario
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Atualizacao trimestral: dia 1 de janeiro, abril, julho e outubro, 06:20 UTC.
+    - cron: '20 6 1 1,4,7,10 *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: patrimonio-imobiliario
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias Google Sheets
+        run: python -m pip install gspread==6.1.4 google-auth==2.35.0
+
+      - name: Gerar snapshots de patrimonio imobiliario
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: python scripts/gerar_patrimonio_imobiliario.py --google-auth
+
+      - name: Gerar CSVs canonicos
+        run: python scripts/exportar_dados_csv.py
+
+      - name: Commitar atualizacoes patrimoniais
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dados/patrimonio_imobiliario.json dados/patrimonio_imobiliario_campus_ano.json dados/patrimonio_imobiliario_mapa.json
+          git add dados_csv/patrimonio_imobiliario.csv dados_csv/patrimonio_imobiliario_campus_ano.csv dados_csv/patrimonio_imobiliario_mapa.csv
+          if git diff --cached --quiet; then
+            echo "Sem alteracoes nos dados patrimoniais."
+          else
+            git commit -m "Atualiza patrimonio imobiliario"
+            git push
+          fi

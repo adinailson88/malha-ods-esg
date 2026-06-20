@@ -1,0 +1,11 @@
+Indicador,Dimensao_Principal,Sentido,Usar_No_Score_Quando,Limite_Atual,Melhoria_Da_Fonte
+N_chamados_total,Governanca,minimizar,houver variacao entre campi,Proxy de pressao operacional; favorece campi menores se usado isoladamente,"Normalizar por area, populacao usuaria ou periodo."
+N_infra_critica,ODS9_Governanca,minimizar,houver variacao entre campi,Calculado por heuristica textual/categoria; depende da qualidade da classificacao,Revisar dicionario de infraestrutura critica por familia tecnica.
+Tempo_medio_resolucao_dias,Governanca_Social,minimizar,houver datas de abertura e conclusao validas,Vazio no snapshot atual,Adicionar data de conclusao padronizada ao snapshot ODS.
+Taxa_resolucao_no_prazo,Governanca,maximizar,houver SLA e conclusao validos,Vazio no snapshot atual,Definir SLA por criticidade e categoria.
+N_criticos_alta,Social,minimizar,criticidade estiver preenchida e variavel,Zerado no snapshot atual,Validar criticidade da fonte.
+N_em_espaco_coletivo,Social,contextual,houver evidencia textual de ambiente coletivo,Heuristica por titulo pode subcontar espacos,"Usar descricao, local e categoria quando disponiveis."
+Densidade_chamados_por_1000m2,Ambiental_ODS11,minimizar,houver area por campus,Zerado no snapshot atual por falta de area por campus,Materializar area construida por campus.
+Razao_preventiva_corretiva,Ambiental_Governanca,maximizar,classificacao preventiva/corretiva estiver confiavel,Pode inflar quando corretiva e zero,Usar formula suavizada: preventiva/(corretiva+1) ou proporcao preventiva.
+Valor_total_gasto_R$,Governanca_ODS12,minimizar,valores estiverem completos e comparaveis,Nao representa custo total se ha chamados sem valor,"Separar gasto registrado, gasto medio e cobertura de valor."
+N_chamados_repetidos,Governanca_ODS12,minimizar,houver chave de local/ativo,Zerado no snapshot atual por falta de chave de recorrencia,Criar chave de local/ativo/categoria para recorrencia.
