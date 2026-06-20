@@ -141,12 +141,11 @@ Unidades de análise (alternativas) no snapshot atual: `Campus Jorge Amado`,
   temporariamente excluído do score pelo guard de "valor dominante" do dashboard.
 - **Correção da heurística (2ª correção 2026-06-20, ratificada):** a inspeção da fonte
   (13.872 chamados classificados) mostrou que `COL_CAT_IA` **não tem rótulo "corretiva"**:
-  `Manutenção Preventiva > …` é o único ramo nomeado e 4.207 chamados o contêm; os demais
-  ramos técnicos (Climatização, Hidrossanitária, Elétrica, Estrutura Predial, etc.) são
-  reativos, isto é, corretivos por definição. O motor (`malha-ods-esg` **e** hub `malha-ia`)
-  passou a definir `n_corr` **por exclusão**: chamados classificados que não são preventiva,
-  descontadas não-categorias (ex.: `Outros > Erro de chamado`). Resultado por campus:
-  **≈ 0,26–0,34** (Jorge Amado 0,272; Paulo Freire 0,335; Sosígenes 0,341; Reitoria 0,263;
+  `Manutenção Preventiva > …` é o único ramo nomeado e 4.207 chamados o contêm; todos os
+  demais chamados classificados são reativos, isto é, corretivos por definição. O motor
+  (`malha-ods-esg` **e** hub `malha-ia`) passou a definir `n_corr` **por exclusão**:
+  qualquer chamado classificado (não vazio) que não seja preventiva. Resultado por campus:
+  **≈ 0,26–0,34** (Jorge Amado 0,268; Paulo Freire 0,330; Sosígenes 0,336; Reitoria 0,261;
   Maria Felipa 0,000). O indicador **volta a ser ativo**, com variação real entre campi.
 - **Melhoria futura:** se a classificação de origem passar a marcar "corretiva" de forma
   explícita, usar o rótulo direto em vez da definição por exclusão.
