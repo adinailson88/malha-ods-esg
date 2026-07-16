@@ -64,7 +64,7 @@ Esta pasta reúne referências do acervo bibliográfico mantido no Google Drive 
 - **Situação da ficha:** Resumo disponível no índice do acervo.
 - **Acesso:** [Abrir o arquivo no Google Drive](https://drive.google.com/file/d/1TOvkZHHs_B7i-HRxc3CcR6c81HO8U6zq/view?usp=drivesdk)
 
-### 4. Chew, M. Y. L.; Conejos, S.; Asmone, A. S. (2016) — Developing a green maintainability framework for green walls in Singapore
+### 4. Chew, M. Y. L.; Conejos, S. (2016) — Developing a green maintainability framework for green walls in Singapore
 
 - **Arquivo:** `2016_ARTIGO_ManutencaoPredial_Chew_Green_Walls_Maintainability_Framework.pdf`
 - **Pasta temática:** `01_Manutencao_e_Governanca`
@@ -858,7 +858,16 @@ Esta pasta reúne referências do acervo bibliográfico mantido no Google Drive 
 
 - [Talib, Rajagopalan e Yang (2013) — desempenho de edifícios hospitalares](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2013_ARTIGO_FacilityManagement_Talib_Building_Performance_Healthcare.md) — Indicadores de funcionalidade, impacto, qualidade e validação estatística.
 - [Araújo Neto (2015) — manutenção predial pública e legislação](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2015_ARTIGO_ManutencaoPredial_Araujo_Neto_Manutencao_Publica_Legislacao.md) — Inspeção, criticidade, banco de dados, planejamento e ciclo de vida.
-- [Chew, Conejos e Asmone (2016) — manutenibilidade de paredes verdes](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2016_ARTIGO_ManutencaoPredial_Chew_Green_Walls_Maintainability_Framework.md) — Sustentabilidade, defeitos, custo do ciclo de vida e critérios multicritério.
+- [Chew e Conejos (2016) — manutenibilidade de paredes verdes](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2016_ARTIGO_ManutencaoPredial_Chew_Green_Walls_Maintainability_Framework.md) — Sustentabilidade, defeitos, custo do ciclo de vida e critérios multicritério.
 - [Barbosa (2016) — facilities e manutenção terceirizada na UFPE](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2016_RELATORIO_FacilityManagement_Barbosa_Gestao_Facilities_UFPE.md) — Caso de IFES sobre preventiva/corretiva, contrato, materiais, sistemas e padronização.
 
 As fichas completas incluem síntese, método, resultados, citações verificadas, limitações e link do texto integral no Drive.
+
+## Fichas detalhadas concluídas — lote 03 (2017–2019)
+
+- [Aldairi, Khan e Munive-Hernandez (2017) — Lean Six Sigma baseado em conhecimento para edifícios sustentáveis](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2017_ARTIGO_ManutencaoPredial_Aldairi_Lean_Six_Sigma_Sustainable_Buildings.md) — 544 regras de conhecimento, diagnóstico organizacional, seleção de projetos e redução de desperdícios. [Texto completo no Drive](https://drive.google.com/file/d/15-sA72a8Tn1OZLDwB5njCrz4n8OKWA0z/view?usp=drivesdk).
+- [Ferreira (2017) — modelo de gestão da manutenção predial em IFES mineiras](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2017_RELATORIO_ManutencaoPredial_Ferreira_Gestao_Manutencao_IFES_Mineiras.md) — Diagnóstico de 11 universidades e modelo com cadastro histórico, software de manutenção e programa de inspeções. [Texto completo no Drive](https://drive.google.com/file/d/1GNvIYIlz75noILVEZtbJjRb1XbAiahCX/view?usp=drivesdk).
+- [Yoon e Cha (2018) — avaliação fuzzy e estratégia ótima de facilities management](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2018_ARTIGO_FacilityManagement_Yoon_Fuzzy_Evaluation_Office_Buildings.md) — 12 fatores críticos, 18 indicadores, FMPI e escolha multicritério de estratégia de gestão. [Texto completo no Drive](https://drive.google.com/file/d/1KPSqPU-kM6X0NEe-vs43qbdm-EBQQfsL/view?usp=drivesdk).
+- [Conejos, Chew e Azril (2019) — avaliação da manutenibilidade de sistemas de vegetação vertical](https://github.com/adinailson88/lerArquivosReferencias/blob/main/Refer%C3%AAncia%20Bibliogr%C3%A1fica%20-%20Drive/fichas/2019_ARTIGO_ManutencaoPredial_Conejos_Vertical_Greenery_Maintainability.md) — Onze estudos de caso, 28 defeitos e checklist para desempenho, custo, risco e impacto ambiental. [Texto completo no Drive](https://drive.google.com/file/d/1DkU5_MMzLsfqJJA02CvVsygxySgGOc5R/view?usp=drivesdk).
+
+As fichas deste lote incluem síntese detalhada, método, resultados, citações verificadas com página, limitações e orientação de uso.
