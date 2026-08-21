@@ -3,7 +3,7 @@
 Repositorio do eixo ODS/ESG do ecossistema Malha IA: indicadores multicriterio para manutencao predial universitaria, com foco em ODS 9, ODS 11 e ODS 12.
 
 Repositorio-hub de dados: [adinailson88/malha-ia](https://github.com/adinailson88/malha-ia)  
-Dashboard previsto: `https://adinailson88.github.io/malha-ods-esg/`
+Dashboard publicado: `https://adinailson88.github.io/malha-ods-esg/`
 
 ## Escopo
 
