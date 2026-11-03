@@ -63,10 +63,15 @@ python scripts\baixar_dados_hub.py
 
 Na máquina do autor, os hosts bloqueados na sessão em nuvem (Apps Script, Google Sheets, Open-Meteo, INMET) provavelmente estão acessíveis.
 
-## 8. Mapa dos arquivos criados nesta rodada
+## 8. Auditoria para artigo de primeiro estrato (rodada posterior)
+
+Em 03/11/2026 foi feita auditoria completa do repositório em `docs/auditoria/` (comece por `00_LEIA-ME.md`): parecer crítico (`01`), auditoria de dados e código (`02`), desenho do estudo (`03`), matriz de dados com o que buscar (`04` e `matriz_dados.csv`), plano de redação e submissão (`05`), plano de execução com portões e riscos (`06`) e protocolo de revisão de literatura (`07`). Scripts novos: `scripts/auditoria/auditar_base.py`. Achados adicionais além dos da seção 3: 40,6% dos chamados com classificação de baixa confiança (concentrada de 2021 em diante), salto de criticidade alta em 2026, `N_infra_critica` por especialidade técnica (30,6% da base), ambiguidade entre desempenho e prioridade, e a lógica de pontuação existente apenas em JavaScript. Recomendação: objeto de medida igual a índice de prioridade de manutenção, alternativas campus e sistema, painel campus, sistema e ano, pesos elicitados e incerteza por SMAA.
+
+## 9. Mapa dos arquivos criados nesta rodada
 
 1. `docs/PLANO_ARTIGO_ODS_ESG.md`: diagnóstico, alinhamento ao pré-projeto, melhorias, literatura preliminar e pendências.
 2. `docs/CONTEXTO_PREPROJETO.md`: resumo do pré-projeto.
 3. `docs/CONTEXTO_CONTINUACAO.md`: este arquivo.
 4. `scripts/diagnostico/mcdm_sensibilidade.py`: reprodução em Python de soma ponderada e TOPSIS, sensibilidade e cenários S0 a S3.
 5. `CLAUDE.md`: ponteiro de leitura para o Claude Code.
+6. `docs/auditoria/` e `scripts/auditoria/`: auditoria completa e reprodutível (ver seção 8).

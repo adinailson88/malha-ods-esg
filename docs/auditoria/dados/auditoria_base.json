@@ -1,0 +1,518 @@
+{
+ "linhas_total": 48418,
+ "linhas_preenchidas": 14580,
+ "linhas_vazias": 33838,
+ "colunas": 30,
+ "colunas_sem_nome": 15,
+ "ids_duplicados": 0,
+ "datas_fora_do_padrao_iso": 0,
+ "painel_campus_ano": {
+  "Reitoria": {
+   "2015": {
+    "n": 18,
+    "crit_alta": 1
+   },
+   "2016": {
+    "n": 51,
+    "baixa_conf": 1,
+    "crit_alta": 1
+   },
+   "2017": {
+    "n": 141,
+    "prev_ia": 6,
+    "baixa_conf": 8,
+    "os_valor": 1,
+    "valor_rs": 106091.5,
+    "os": 1
+   },
+   "2018": {
+    "n": 335,
+    "baixa_conf": 10,
+    "prev_ia": 58,
+    "os_valor": 32,
+    "valor_rs": 73780.41,
+    "os": 33,
+    "crit_alta": 3
+   },
+   "2019": {
+    "n": 382,
+    "prev_ia": 142,
+    "crit_alta": 5,
+    "baixa_conf": 6,
+    "os_valor": 41,
+    "valor_rs": 257695.98,
+    "os": 42
+   },
+   "2020": {
+    "n": 160,
+    "prev_ia": 76,
+    "baixa_conf": 9,
+    "os_valor": 12,
+    "valor_rs": 139167.13,
+    "os": 12,
+    "crit_alta": 2
+   },
+   "2021": {
+    "n": 196,
+    "prev_ia": 72,
+    "os_valor": 27,
+    "valor_rs": 362983.11,
+    "os": 28,
+    "baixa_conf": 94,
+    "crit_alta": 1
+   },
+   "2022": {
+    "n": 253,
+    "baixa_conf": 184,
+    "prev_ia": 25,
+    "os_valor": 25,
+    "valor_rs": 341335.58,
+    "os": 25,
+    "crit_alta": 2
+   },
+   "2023": {
+    "n": 277,
+    "baixa_conf": 187,
+    "os_valor": 46,
+    "valor_rs": 294563.32,
+    "os": 47,
+    "prev_ia": 53,
+    "crit_alta": 1
+   },
+   "2024": {
+    "n": 247,
+    "baixa_conf": 174,
+    "prev_ia": 48,
+    "os_valor": 39,
+    "valor_rs": 151049.96,
+    "os": 43,
+    "crit_alta": 1
+   },
+   "2025": {
+    "n": 200,
+    "os_valor": 23,
+    "valor_rs": 273874.6,
+    "os": 28,
+    "prev_ia": 34,
+    "baixa_conf": 141,
+    "crit_alta": 4
+   },
+   "2026": {
+    "n": 194,
+    "prev_ia": 36,
+    "baixa_conf": 149,
+    "os_valor": 15,
+    "valor_rs": 229996.3,
+    "os": 15,
+    "crit_alta": 4
+   }
+  },
+  "Campus Sosígenes Costa": {
+   "2016": {
+    "n": 11,
+    "baixa_conf": 2
+   },
+   "2017": {
+    "n": 93,
+    "baixa_conf": 17,
+    "os_valor": 23,
+    "valor_rs": 171893.55,
+    "os": 24,
+    "crit_alta": 4,
+    "prev_ia": 6
+   },
+   "2018": {
+    "n": 517,
+    "os_valor": 89,
+    "valor_rs": 601039.31,
+    "os": 91,
+    "baixa_conf": 8,
+    "prev_ia": 115,
+    "crit_alta": 16
+   },
+   "2019": {
+    "n": 649,
+    "os_valor": 129,
+    "valor_rs": 743598.51,
+    "os": 133,
+    "prev_ia": 318,
+    "baixa_conf": 11,
+    "crit_alta": 12
+   },
+   "2020": {
+    "n": 366,
+    "os_valor": 78,
+    "valor_rs": 578511.81,
+    "os": 78,
+    "prev_ia": 229,
+    "baixa_conf": 12,
+    "crit_alta": 1
+   },
+   "2021": {
+    "n": 436,
+    "prev_ia": 249,
+    "os_valor": 81,
+    "valor_rs": 1175360.72,
+    "os": 82,
+    "baixa_conf": 127,
+    "crit_alta": 2
+   },
+   "2022": {
+    "n": 515,
+    "baixa_conf": 256,
+    "prev_ia": 167,
+    "os_valor": 72,
+    "valor_rs": 786669.52,
+    "os": 73,
+    "crit_alta": 2
+   },
+   "2023": {
+    "n": 449,
+    "baixa_conf": 338,
+    "os_valor": 98,
+    "valor_rs": 2065988.65,
+    "os": 100,
+    "prev_ia": 146,
+    "crit_alta": 3
+   },
+   "2024": {
+    "n": 402,
+    "baixa_conf": 268,
+    "prev_ia": 146,
+    "os_valor": 114,
+    "valor_rs": 663729.12,
+    "os": 116,
+    "crit_alta": 2
+   },
+   "2025": {
+    "n": 430,
+    "baixa_conf": 266,
+    "prev_ia": 145,
+    "os_valor": 94,
+    "valor_rs": 1074622.86,
+    "os": 97,
+    "crit_alta": 2
+   },
+   "2026": {
+    "n": 377,
+    "os_valor": 51,
+    "valor_rs": 779758.37,
+    "os": 56,
+    "baixa_conf": 276,
+    "prev_ia": 116,
+    "crit_alta": 3
+   }
+  },
+  "Campus Jorge Amado": {
+   "2015": {
+    "n": 9,
+    "crit_alta": 2
+   },
+   "2016": {
+    "n": 101,
+    "prev_ia": 3,
+    "baixa_conf": 5,
+    "crit_alta": 1
+   },
+   "2017": {
+    "n": 232,
+    "baixa_conf": 17,
+    "prev_ia": 15,
+    "crit_alta": 7,
+    "os_valor": 15,
+    "valor_rs": 58128.99,
+    "os": 15
+   },
+   "2018": {
+    "n": 425,
+    "prev_ia": 104,
+    "os_valor": 41,
+    "valor_rs": 526499.96,
+    "os": 43,
+    "baixa_conf": 11,
+    "crit_alta": 7
+   },
+   "2019": {
+    "n": 447,
+    "prev_ia": 188,
+    "os_valor": 40,
+    "valor_rs": 182269.0,
+    "os": 42,
+    "baixa_conf": 16,
+    "crit_alta": 7
+   },
+   "2020": {
+    "n": 170,
+    "prev_ia": 105,
+    "os_valor": 20,
+    "valor_rs": 202776.92,
+    "os": 20,
+    "baixa_conf": 7,
+    "crit_alta": 1
+   },
+   "2021": {
+    "n": 223,
+    "prev_ia": 84,
+    "baixa_conf": 83,
+    "os_valor": 24,
+    "valor_rs": 810255.66,
+    "os": 26,
+    "crit_alta": 2
+   },
+   "2022": {
+    "n": 297,
+    "prev_ia": 44,
+    "baixa_conf": 182,
+    "os_valor": 26,
+    "valor_rs": 560174.66,
+    "os": 26,
+    "crit_alta": 2
+   },
+   "2023": {
+    "n": 492,
+    "baixa_conf": 362,
+    "os_valor": 75,
+    "valor_rs": 1078566.9,
+    "os": 80,
+    "prev_ia": 91,
+    "crit_alta": 2
+   },
+   "2024": {
+    "n": 512,
+    "os_valor": 76,
+    "valor_rs": 586229.63,
+    "os": 78,
+    "prev_ia": 104,
+    "baixa_conf": 375,
+    "crit_alta": 1
+   },
+   "2025": {
+    "n": 568,
+    "os_valor": 109,
+    "valor_rs": 1190966.73,
+    "os": 112,
+    "prev_ia": 95,
+    "baixa_conf": 405,
+    "crit_alta": 2
+   },
+   "2026": {
+    "n": 470,
+    "baixa_conf": 378,
+    "prev_ia": 92,
+    "os_valor": 57,
+    "valor_rs": 991847.76,
+    "os": 57,
+    "crit_alta": 12
+   }
+  },
+  "Campus Paulo Freire": {
+   "2015": {
+    "n": 1
+   },
+   "2016": {
+    "n": 9,
+    "prev_ia": 2,
+    "baixa_conf": 1
+   },
+   "2017": {
+    "n": 67,
+    "crit_alta": 3,
+    "os_valor": 8,
+    "valor_rs": 24680.15,
+    "os": 8,
+    "baixa_conf": 4,
+    "prev_ia": 3
+   },
+   "2018": {
+    "n": 464,
+    "os_valor": 52,
+    "valor_rs": 248566.13,
+    "os": 54,
+    "prev_ia": 128,
+    "baixa_conf": 8,
+    "crit_alta": 1
+   },
+   "2019": {
+    "n": 607,
+    "os_valor": 90,
+    "valor_rs": 319363.14,
+    "os": 91,
+    "prev_ia": 278,
+    "crit_alta": 9,
+    "baixa_conf": 13
+   },
+   "2020": {
+    "n": 293,
+    "prev_ia": 169,
+    "os_valor": 85,
+    "valor_rs": 272965.98,
+    "os": 86,
+    "baixa_conf": 8,
+    "crit_alta": 1
+   },
+   "2021": {
+    "n": 327,
+    "prev_ia": 108,
+    "os_valor": 100,
+    "valor_rs": 262697.37,
+    "os": 100,
+    "baixa_conf": 107
+   },
+   "2022": {
+    "n": 328,
+    "prev_ia": 61,
+    "os_valor": 112,
+    "valor_rs": 227042.73,
+    "os": 112,
+    "baixa_conf": 166,
+    "crit_alta": 1
+   },
+   "2023": {
+    "n": 415,
+    "baixa_conf": 316,
+    "prev_ia": 129,
+    "os_valor": 103,
+    "valor_rs": 454368.92,
+    "os": 103,
+    "crit_alta": 1
+   },
+   "2024": {
+    "n": 435,
+    "prev_ia": 147,
+    "baixa_conf": 302,
+    "os_valor": 115,
+    "valor_rs": 281459.98,
+    "os": 116,
+    "crit_alta": 1
+   },
+   "2025": {
+    "n": 464,
+    "baixa_conf": 305,
+    "prev_ia": 128,
+    "os_valor": 96,
+    "valor_rs": 611945.66,
+    "os": 97,
+    "crit_alta": 1
+   },
+   "2026": {
+    "n": 514,
+    "baixa_conf": 405,
+    "prev_ia": 142,
+    "os_valor": 68,
+    "valor_rs": 470699.05,
+    "os": 69,
+    "crit_alta": 13
+   }
+  },
+  "Campus Maria Felipa - Jequié": {
+   "2026": {
+    "n": 11,
+    "prev_ia": 4,
+    "baixa_conf": 8
+   }
+  }
+ },
+ "status": [
+  [
+   "Fechado",
+   13828
+  ],
+  [
+   "Solucionado",
+   549
+  ],
+  [
+   "Processando (atribuído)",
+   155
+  ],
+  [
+   "Novo",
+   25
+  ],
+  [
+   "Pendente",
+   13
+  ],
+  [
+   "Processando (planejado)",
+   10
+  ]
+ ],
+ "criticidade": [
+  [
+   "Baixa",
+   12477
+  ],
+  [
+   "Média",
+   1954
+  ],
+  [
+   "Alta",
+   149
+  ]
+ ],
+ "executor_classificacao": [
+  [
+   "LSTM_BAIXA_CONF",
+   5921
+  ],
+  [
+   "Reclass_LSTM",
+   4744
+  ],
+  [
+   "LSTM",
+   3796
+  ],
+  [
+   "RF_Fallback_BAIXA_CONF",
+   107
+  ],
+  [
+   "SemClassificador",
+   12
+  ]
+ ],
+ "categorias_ia_distintas": 53,
+ "concordancia_categoria_historica_x_ia": 0.366,
+ "preenchimento_por_coluna": {
+  "ID Chamado": 14580,
+  "TÍTULO": 14578,
+  "DATA E HORA ABERTURA": 14580,
+  "STATUS": 14580,
+  "coluna_4": 0,
+  "coluna_5": 0,
+  "coluna_6": 0,
+  "CAMPUS": 14580,
+  "coluna_8": 0,
+  "coluna_9": 0,
+  "coluna_10": 0,
+  "coluna_11": 0,
+  "CATEGORIA COMPLETA": 14580,
+  "coluna_13": 0,
+  "coluna_14": 0,
+  "coluna_15": 0,
+  "Valor do chamado": 14580,
+  "coluna_17": 0,
+  "coluna_18": 0,
+  "coluna_19": 0,
+  "Latitude x Longitude Geral": 14580,
+  "coluna_21": 0,
+  "DESCRIÇÃO GLPI": 14570,
+  "TÍTULO O.S.M.": 2459,
+  "DESCRIÇÃO O.S.M.": 2421,
+  "Classificação IA": 14580,
+  "coluna_26": 0,
+  "Avaliação (%)": 14580,
+  "Executor": 14580,
+  "Criticidade Atribuída por IA": 14580
+ },
+ "confianca_ia_quantis": {
+  "5": 0.2,
+  "25": 0.67,
+  "50": 0.94,
+  "75": 0.99,
+  "95": 1.0
+ }
+}

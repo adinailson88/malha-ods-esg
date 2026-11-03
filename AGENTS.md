@@ -30,3 +30,5 @@ Nao duplicar `dados/chamados.json` por padrao. A base bruta pertence ao hub `mal
 ## Continuacao do trabalho
 
 O estado, as decisoes, os achados e os comandos para continuar no computador do autor estao em `docs/CONTEXTO_CONTINUACAO.md`; o plano do artigo esta em `docs/PLANO_ARTIGO_ODS_ESG.md`.
+
+A auditoria completa, o parecer critico, o desenho do estudo para artigo de primeiro estrato, a matriz de dados e o plano de execucao estao em `docs/auditoria/` (comece por `00_LEIA-ME.md`).
