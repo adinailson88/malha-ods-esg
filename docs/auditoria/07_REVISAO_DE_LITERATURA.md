@@ -1,5 +1,7 @@
 # Revisão de literatura: protocolo, referências já identificadas e lacunas do acervo
 
+> Atualização de 03/11/2026: o dossiê `docs/literatura/` (mapa temático, 51 referências com nível de verificação, contexto brasileiro, plano de leitura e ângulos de contribuição) amplia e, onde houver divergência, substitui a seção 2 deste documento. Confirmações novas: Saisana, Saltelli e Tarantola (2005) e Rezaei (2015) com DOI; Gunay, Shen e Yang (2019) em Building Research & Information 47(5), DOI 10.1080/09613218.2018.1459004; NBR 5674 com versão vigente a confirmar.
+
 O manuscrito atual tem sete referências, nenhuma sobre indicadores de sustentabilidade em universidades, sobre incerteza em decisão multicritério nem sobre manutenção predial universitária com dados de chamados. Um artigo de primeiro estrato exige revisão sistemática ou, no mínimo, revisão documentada que demonstre a lacuna. Este documento fixa o protocolo, lista o que já foi identificado (com o nível de verificação de cada item) e aponta o que falta no acervo do autor. Nenhum DOI foi inventado: onde não foi possível confirmar, consta "DOI não encontrado" ou "conferir".
 
 ## 1. Pergunta e protocolo (modelo para pré-registro)
