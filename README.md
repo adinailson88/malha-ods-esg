@@ -1,5 +1,7 @@
 # Malha ODS ESG
 
+> **Auditoria e plano do artigo (03/11/2026):** a auditoria completa do repositório, o parecer crítico do manuscrito, o desenho do estudo para um artigo de primeiro estrato, a matriz de dados a obter, o plano de redação e o plano de execução estão em [`docs/auditoria/`](docs/auditoria/00_LEIA-ME.md). Contexto para continuar no computador do autor: [`docs/CONTEXTO_CONTINUACAO.md`](docs/CONTEXTO_CONTINUACAO.md).
+
 Repositorio do eixo ODS/ESG do ecossistema Malha IA: indicadores multicriterio para manutencao predial universitaria, com foco em ODS 9, ODS 11 e ODS 12.
 
 Repositorio-hub de dados: [adinailson88/malha-ia](https://github.com/adinailson88/malha-ia)  
