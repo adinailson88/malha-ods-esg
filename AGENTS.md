@@ -26,3 +26,7 @@ O repositorio `adinailson88/malha-ia` permanece como hub central dos dados. Este
 Nao trazer motores de classificacao, previsao de chamados ou previsao de custos para este repositorio.
 
 Nao duplicar `dados/chamados.json` por padrao. A base bruta pertence ao hub `malha-ia`.
+
+## Continuacao do trabalho
+
+O estado, as decisoes, os achados e os comandos para continuar no computador do autor estao em `docs/CONTEXTO_CONTINUACAO.md`; o plano do artigo esta em `docs/PLANO_ARTIGO_ODS_ESG.md`.
