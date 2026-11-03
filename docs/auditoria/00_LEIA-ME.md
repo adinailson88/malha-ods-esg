@@ -30,6 +30,7 @@ O estado atual não é submetível a um periódico de primeiro estrato. O proble
 | `04_MATRIZ_DADOS.md` e `matriz_dados.csv` | O que já existe e o que buscar, com prioridade, fonte candidata, como obter e modelo de solicitação |
 | `05_PLANO_DE_REDACAO.md` | Periódicos candidatos, títulos, resumo-esqueleto, estrutura, figuras e tabelas, guia de escrita, perguntas de revisores, declarações e checklist |
 | `06_PLANO_DE_EXECUCAO.md` | Fases, portões de decisão, riscos, estrutura-alvo do repositório e dez primeiros passos |
+| `../literatura/README.md` | Dossiê de literatura, temas e contexto (mapa temático, 51 referências verificadas por nível, contexto brasileiro, plano de leitura, ângulos de contribuição) |
 | `07_REVISAO_DE_LITERATURA.md` | Protocolo da revisão sistemática, referências identificadas com nível de verificação e lacunas do acervo |
 | `dados/auditoria_base.json` | Saída agregada da auditoria da base (reprodutível por `scripts/auditoria/auditar_base.py`) |
 
