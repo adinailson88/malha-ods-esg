@@ -1,5 +1,7 @@
 # Malha ODS ESG
 
+> **Gêmeo digital (protótipo v0, 03/11/2026):** desenho em [`docs/gemeo_digital/`](docs/gemeo_digital/README.md) e página em [`gemeo_digital/`](gemeo_digital/README.md). É protótipo metodológico, não resultado de artigo.
+
 > **Auditoria e plano do artigo (03/11/2026):** a auditoria completa do repositório, o parecer crítico do manuscrito, o desenho do estudo para um artigo de primeiro estrato, a matriz de dados a obter, o plano de redação e o plano de execução estão em [`docs/auditoria/`](docs/auditoria/00_LEIA-ME.md). Contexto para continuar no computador do autor: [`docs/CONTEXTO_CONTINUACAO.md`](docs/CONTEXTO_CONTINUACAO.md).
 
 Repositorio do eixo ODS/ESG do ecossistema Malha IA: indicadores multicriterio para manutencao predial universitaria, com foco em ODS 9, ODS 11 e ODS 12.
